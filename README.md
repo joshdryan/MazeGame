@@ -9,7 +9,8 @@ Contributers:
 
 
 Requirements:
-Xcode 9.2
+- Mac OS High Sierra
+- Xcode 9.2
 
 
 The app may be built from within XCode, and is compatible with iOS 11.2, and all devices currently supported by Apple. 
