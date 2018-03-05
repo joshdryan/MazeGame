@@ -3,9 +3,9 @@
 This is the Repository for our CS3141 Maze Game project for iOS.
 
 Contributers:
-Josh Ryan
-Daniel Lambert
-Leo Stelmaszek
+- Josh Ryan
+- Daniel Lambert
+- Leo Stelmaszek
 
 
 Requirements:
