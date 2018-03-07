@@ -1,9 +1,9 @@
 //
 //  GameViewController.swift
-//  Simple3DGame
+//  MazeGame
 //
-//  Created by Leo Stelmaszek on 3/2/18.
-//  Copyright © 2018 Leo Stelmaszek. All rights reserved.
+//  Created by Daniel Lambert, Josh Ryan, Leo Stelmaszek on 2/26/18.
+//  Copyright © 2018 Bootleg Mobile. All rights reserved.
 //
 
 import UIKit
@@ -42,8 +42,6 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         initView()
         
-        var xshift: Float = 0
-        
         //loading materials with correct color
         materialGreen.diffuse.contents = UIColor.green
         materialRed.diffuse.contents = UIColor.red
@@ -61,7 +59,7 @@ class GameViewController: UIViewController {
         sphere1 = SCNNode(geometry: sphereGeometry)
         sphere1.position = SCNVector3(x: -5, y: 1.5, z: 0)
         sphere2 = SCNNode(geometry: sphereGeometry)
-        sphere2.position = SCNVector3(x: xshift, y: 1.5, z: -5)/**/
+        sphere2.position = SCNVector3(x: 0, y: 1.5, z: -5)/**/
         
         sphere1.addChildNode(camera)
         
@@ -80,11 +78,6 @@ class GameViewController: UIViewController {
         sceneView.scene?.rootNode.addChildNode(ground)
         sceneView.scene?.rootNode.addChildNode(light)
         sceneView.scene?.rootNode.addChildNode(cylinder1)
-        while(xshift < 1000){
-            xshift = xshift + 1
-            sceneView.scene?.rootNode.addChildNode(sphere2)
-        }
-        
         sceneView.scene?.rootNode.addChildNode(sphere1)
         
         
@@ -94,28 +87,8 @@ class GameViewController: UIViewController {
         
         loadMaze()
         
-        //move()
-        
-        //wallx.convertPosition(SCNVector3(x: wallx.position.x, y: 1.5, z: 5), to: wallx)
-        //wallx.position = SCNVector3(x: 5, y: 1.5, z: 5)
-        //sceneView.scene?.rootNode.addChildNode(wallx.clone())
-        
-        //sceneView.scene?.rootNode.addChildNode(wallx.position.x.advanced(by: 5))
-        //sceneView.scene?.rootNode.addChildNode(wallz.eulerAngles.)
-        
-        //initScene()
-        //initCamera()
-        //creatMaze()
     }
     
-    /*func move() {
-     DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
-     self.sphere1.position.x. advanced(by: 5)
-     }
-     for i in 1...10 {
-     //sphere1.position.x.advanced(by: 5)
-     }
-     }*/
     
     func loadMaze() {
         let wallxGeometry = SCNBox(width: 5, height: 5, length: 1, chamferRadius: 0)
@@ -176,47 +149,25 @@ class GameViewController: UIViewController {
         light.constraints = [constraint]
     }
     
-    /*func initScene() {
-     gameScene = SCNScene()
-     gameView.scene = gameScene
-     
-     gameView.isPlaying = true
-     }
-     
-     func initCamera() {
-     camaraNode = SCNNode()
-     camaraNode.camera = SCNCamera()
-     
-     camaraNode.position = SCNVector3(x:0, y:5, z:10)
-     }
-     
-     func creatMaze() {
-     
-     let pyramid: SCNGeometry = SCNPyramid(width: 1, height: 1, length: 1)
-     geometry.materials.first?.diffuse.contents = UIColor.red
-     let geometryNode = SCNNode(geometry: geometry)
-     gameScene.rootNode.addChildNode(geometryNode)
-     }
-     
-     override var shouldAutorotate: Bool {
-     return true
-     }
-     
-     override var prefersStatusBarHidden: Bool {
-     return true
-     }
-     
-     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-     if UIDevice.current.userInterfaceIdiom == .phone {
-     return .allButUpsideDown
-     } else {
-     return .all
-     }
-     }
-     
-     override func didReceiveMemoryWarning() {
-     super.didReceiveMemoryWarning()
-     // Release any cached data, images, etc that aren't in use.
-     }*/
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return .allButUpsideDown
+        } else {
+            return .all
+        }
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Release any cached data, images, etc that aren't in use.
+    }
 }
 
