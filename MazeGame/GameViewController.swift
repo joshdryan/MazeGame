@@ -35,6 +35,10 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     let materialBlue = SCNMaterial()                //set blue material
     let materialPurple = SCNMaterial()              //set purple material
     let materialCyan = SCNMaterial()                //set cyan material
+    let testMaze = [1,1,1,1,1,1,1,1,1,8,
+                    1,0,1,0,0,0,1,0,1,8,
+                    1,0,0,0,1,0,0,0,1,7,
+                    1,1,1,1,1,1,1,1,1,9,]
     
     //var gameView: SCNView!
     //var gameScene: SCNScene!
@@ -90,6 +94,49 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         wallzGeometry.materials = [materialCyan]
         wallz += [SCNNode(geometry: wallzGeometry)]
         wallz[0].position = SCNVector3(x: 10, y: 1.5, z: 7.5)
+        
+        /*
+        var xpos = 0
+        var zpos = 0
+        var i = 0
+        var xcont = 0
+        var zcont = 0
+        var xz = true
+        while(i<testMaze.count){
+            switch (testMaze[i]){
+            case 0:
+                print("blank")
+                xpos=xpos+5
+            case 1:
+                print("wall")
+                if(xz){
+                    
+                }else{
+                    
+                }
+            case 7:
+                print("x to z new line")
+                xz = false
+                xcont = 0
+                zcont=zcont+5
+                
+            case 8:
+                print("z to x new line")
+                xz = true
+                xcont = 0
+                zcont=zcont+5
+                
+            case 9:
+                print("finished maze")
+            default:
+                print("this shouldn't happen")
+            }
+            
+            
+            i = i+1;
+        }
+        
+        */
         
         for child in wallx {
             //print(child.position)
