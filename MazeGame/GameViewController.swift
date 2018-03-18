@@ -25,8 +25,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     var cylinder1 = SCNNode()
     var sphere1 = SCNNode()
     var sphere2 = SCNNode()
-    var borderWallx = SCNNode()
-    var borderWallz = SCNNode()
     var wallz: [SCNNode] = []
     var wallx: [SCNNode] = []
     
@@ -35,9 +33,11 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     let materialBlue = SCNMaterial()                //set blue material
     let materialPurple = SCNMaterial()              //set purple material
     let materialCyan = SCNMaterial()                //set cyan material
-    let testMaze = [1,1,1,1,1,1,1,1,1,8,
-                    1,0,1,0,0,0,1,0,1,8,
-                    1,0,0,0,1,0,0,0,1,7,
+    let testMaze = [10,6,
+                    1,1,1,1,1,1,1,1,1,7,
+                    1,0,1,0,0,0,1,0,1,6,
+                    1,0,1,0,1,0,1,0,1,6,
+                    1,0,0,0,1,0,0,0,1,8,
                     1,1,1,1,1,1,1,1,1,9,]
     
     //var gameView: SCNView!
@@ -70,73 +70,66 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     }
     
     func loadMaze() {
-        let borderWallxGeometry = SCNBox(width: 100, height: 5, length: 1, chamferRadius: 0)
-        borderWallxGeometry.materials = [materialRed]
-        borderWallx = SCNNode(geometry: borderWallxGeometry)
-        borderWallx.position = SCNVector3(x: 50, y: 1.5, z: -0.5)
-        
-        let borderWallzGeometry = SCNBox(width: 1, height: 5, length: 100, chamferRadius: 0)
-        borderWallzGeometry.materials = [materialCyan]
-        borderWallz = SCNNode(geometry: borderWallzGeometry)
-        borderWallz.position = SCNVector3(x: -0.5, y: 1.5, z: 50)
-        
-        sceneView.scene?.rootNode.addChildNode(borderWallx)
-        sceneView.scene?.rootNode.addChildNode(borderWallz)
-        
         let wallxGeometry = SCNBox(width: 5, height: 5, length: 1, chamferRadius: 0)
         wallxGeometry.materials = [materialRed]
-        wallx += [SCNNode(geometry: wallxGeometry)]
-        wallx[0].position = SCNVector3(x: 7.5, y: 1.5, z: 10)
-        wallx.append(SCNNode(geometry: wallxGeometry))
-        wallx[1].position = SCNVector3(x: 12.5, y: 1.5, z: 15)
         
-        let wallzGeometry = SCNBox(width: 1, height: 5, length: 5, chamferRadius: 0)
+        let wallzGeometry = SCNBox(width: 1, height: 5, length: 10, chamferRadius: 0)
         wallzGeometry.materials = [materialCyan]
-        wallz += [SCNNode(geometry: wallzGeometry)]
-        wallz[0].position = SCNVector3(x: 10, y: 1.5, z: 7.5)
         
-        /*
-        var xpos = 0
-        var zpos = 0
-        var i = 0
+        var xpos = 0.0
+        var zpos = 0.0
+        let ypos = 2.5
+        var i = 2
         var xcont = 0
         var zcont = 0
         var xz = true
+        
         while(i<testMaze.count){
             switch (testMaze[i]){
             case 0:
                 print("blank")
                 xpos=xpos+5
             case 1:
-                print("wall")
                 if(xz){
-                    
+                    wallx.append(SCNNode(geometry: wallxGeometry))
+                    wallx[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
+                    wallx += [SCNNode(geometry: wallxGeometry)]
+                    print("X-axis wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
+                    xcont = xcont + 1;
+                    xpos = xpos + 5;
                 }else{
-                    
+                    wallz.append(SCNNode(geometry: wallzGeometry))
+                    wallz[zcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
+                    wallz += [SCNNode(geometry: wallzGeometry)]
+                    print("Z-axis wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
+                    zcont = zcont + 1;
+                    xpos = xpos + 5;
                 }
+            case 6:
+                print("new line")
+                xpos = 0
+                zpos = zpos+5
             case 7:
-                print("x to z new line")
+                print("walls from x-axis to z-axis, new line")
                 xz = false
-                xcont = 0
-                zcont=zcont+5
+                xpos = 0
+                zpos=zpos+5
                 
             case 8:
-                print("z to x new line")
+                print("walls from z-axis to x-axis, new line")
                 xz = true
-                xcont = 0
-                zcont=zcont+5
+                xpos = 0
+                zpos=zpos+5
                 
             case 9:
                 print("finished maze")
             default:
                 print("this shouldn't happen")
             }
-            
-            
             i = i+1;
         }
         
-        */
+        
         
         for child in wallx {
             //print(child.position)
@@ -146,6 +139,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
             //print(child.position)
             sceneView.scene?.rootNode.addChildNode(child)
         }
+
     }
     
     func initView() {
@@ -170,6 +164,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         constraint.isGimbalLockEnabled = true
         self.camera.constraints = [constraint]
         self.camera.position = SCNVector3(x: 0, y: 5, z: 0)
+        //self.camera.position = SCNVector3(x: -40, y: 50, z: -40) //temp
         
         let ambientLight = SCNLight()
         ambientLight.color = UIColor.darkGray
