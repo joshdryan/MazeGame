@@ -22,23 +22,26 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     
     //objects to be added to scene
     var lookAtNode = SCNNode()
-    var cylinder1 = SCNNode()
-    var sphere1 = SCNNode()
-    var sphere2 = SCNNode()
     var wallz: [SCNNode] = []
     var wallx: [SCNNode] = []
-    
     let materialGreen = SCNMaterial()               //set green material
     let materialRed = SCNMaterial()                 //set red material
     let materialBlue = SCNMaterial()                //set blue material
     let materialPurple = SCNMaterial()              //set purple material
     let materialCyan = SCNMaterial()                //set cyan material
-    let testMaze = [10,6,
-                    1,1,1,1,1,1,1,1,1,7,
+    let testMazeB = [10,6,
+                    1,1,1,1,1,1,1,1,1,6,
                     1,0,1,0,0,0,1,0,1,6,
                     1,0,1,0,1,0,1,0,1,6,
-                    1,0,0,0,1,0,0,0,1,8,
+                    1,0,0,0,1,0,0,0,1,6,
                     1,1,1,1,1,1,1,1,1,9,]
+    let testMaze = [10,6,
+                    1,1,1,1,1,1,1,1,6,
+                    1,0,1,0,1,0,0,1,6,
+                    1,0,0,0,0,1,0,1,6,
+                    1,0,0,0,0,1,0,1,6,
+                    1,0,1,0,1,0,0,1,6,
+                    1,1,1,1,1,1,1,1,9,]
     
     //var gameView: SCNView!
     //var gameScene: SCNScene!
@@ -70,19 +73,14 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     }
     
     func loadMaze() {
-        let wallxGeometry = SCNBox(width: 5, height: 5, length: 1, chamferRadius: 0)
+        let wallxGeometry = SCNBox(width: 5, height: 5, length: 5, chamferRadius: 0)
         wallxGeometry.materials = [materialRed]
-        
-        let wallzGeometry = SCNBox(width: 1, height: 5, length: 10, chamferRadius: 0)
-        wallzGeometry.materials = [materialCyan]
         
         var xpos = 0.0
         var zpos = 0.0
         let ypos = 2.5
         var i = 2
         var xcont = 0
-        var zcont = 0
-        var xz = true
         
         while(i<testMaze.count){
             switch (testMaze[i]){
@@ -90,37 +88,17 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                 print("blank")
                 xpos=xpos+5
             case 1:
-                if(xz){
                     wallx.append(SCNNode(geometry: wallxGeometry))
                     wallx[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
                     wallx += [SCNNode(geometry: wallxGeometry)]
                     print("X-axis wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
                     xcont = xcont + 1;
                     xpos = xpos + 5;
-                }else{
-                    wallz.append(SCNNode(geometry: wallzGeometry))
-                    wallz[zcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
-                    wallz += [SCNNode(geometry: wallzGeometry)]
-                    print("Z-axis wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
-                    zcont = zcont + 1;
-                    xpos = xpos + 5;
-                }
+                
             case 6:
                 print("new line")
                 xpos = 0
                 zpos = zpos+5
-            case 7:
-                print("walls from x-axis to z-axis, new line")
-                xz = false
-                xpos = 0
-                zpos=zpos+5
-                
-            case 8:
-                print("walls from z-axis to x-axis, new line")
-                xz = true
-                xpos = 0
-                zpos=zpos+5
-                
             case 9:
                 print("finished maze")
             default:
@@ -132,10 +110,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         
         
         for child in wallx {
-            //print(child.position)
-            sceneView.scene?.rootNode.addChildNode(child)
-        }
-        for child in wallz {
             //print(child.position)
             sceneView.scene?.rootNode.addChildNode(child)
         }
@@ -164,7 +138,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         constraint.isGimbalLockEnabled = true
         self.camera.constraints = [constraint]
         self.camera.position = SCNVector3(x: 0, y: 5, z: 0)
-        //self.camera.position = SCNVector3(x: -40, y: 50, z: -40) //temp
+        self.camera.position = SCNVector3(x: -20, y: 50, z: -40) //temp
         
         let ambientLight = SCNLight()
         ambientLight.color = UIColor.darkGray
@@ -194,24 +168,11 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     }
     
     func initElements() {
-        let cylinderGeometry = SCNCylinder(radius: 0.1, height: 10)
-        cylinderGeometry.materials = [materialGreen]
-        cylinder1 = SCNNode(geometry: cylinderGeometry)
-        cylinder1.position = SCNVector3(x: 0, y: 5, z: 0)
-        
-        let sphereGeometry = SCNSphere(radius: 1.5)
-        sphereGeometry.materials = [materialPurple]
-        sphere1 = SCNNode(geometry: sphereGeometry)
-        sphere1.position = SCNVector3(x: -5, y: 1.5, z: 0)
-        sphere2 = SCNNode(geometry: sphereGeometry)
-        sphere2.position = SCNVector3(x: 0, y: 1.5, z: -5)/**/
-        
         sceneView.allowsCameraControl = true
         sceneView.scene?.rootNode.addChildNode(self.camera)
         sceneView.scene?.rootNode.addChildNode(ground)
         sceneView.scene?.rootNode.addChildNode(light)
-        sceneView.scene?.rootNode.addChildNode(cylinder1)
-        sceneView.scene?.rootNode.addChildNode(sphere1)
+
     }
     
     override var shouldAutorotate: Bool {
