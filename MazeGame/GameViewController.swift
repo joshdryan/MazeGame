@@ -22,8 +22,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     
     //objects to be added to scene
     var lookAtNode = SCNNode()
-    var wallz: [SCNNode] = []
-    var wallx: [SCNNode] = []
+    var wall: [SCNNode] = []
     let materialGreen = SCNMaterial()               //set green material
     let materialRed = SCNMaterial()                 //set red material
     let materialBlue = SCNMaterial()                //set blue material
@@ -73,8 +72,8 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     }
     
     func loadMaze() {
-        let wallxGeometry = SCNBox(width: 5, height: 5, length: 5, chamferRadius: 0)
-        wallxGeometry.materials = [materialRed]
+        let wallGeometry = SCNBox(width: 5, height: 8, length: 5, chamferRadius: 0)
+        wallGeometry.materials = [materialRed]
         
         var xpos = 0.0
         var zpos = 0.0
@@ -114,7 +113,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         
         
         
-        for child in wallx {
+        for child in wall {
             //print(child.position)
             sceneView.scene?.rootNode.addChildNode(child)
         }
