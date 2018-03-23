@@ -93,9 +93,9 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                         xpos=xpos+5
                     
                     case 1:
-                        wallx.append(SCNNode(geometry: wallxGeometry))
-                        wallx[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
-                        wallx += [SCNNode(geometry: wallxGeometry)]
+                        wall.append(SCNNode(geometry: wallGeometry))
+                        wall[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
+                        wall += [SCNNode(geometry: wallGeometry)]
                         print("X-axis wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
                         xcont = xcont + 1;
                         xpos = xpos + 5;
@@ -119,50 +119,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         }
         
     }
-    
-//    func loadMaze() {
-//        let wallxGeometry = SCNBox(width: 5, height: 5, length: 5, chamferRadius: 0)
-//        wallxGeometry.materials = [materialRed]
-//
-//        var xpos = 0.0
-//        var zpos = 0.0
-//        let ypos = 2.5
-//        var i = 2
-//        var xcont = 0
-//
-//        while(i<testMaze.count){
-//            switch (testMaze[i]){
-//            case 0:
-//                print("blank")
-//                xpos=xpos+5
-//            case 1:
-//                    wallx.append(SCNNode(geometry: wallxGeometry))
-//                    wallx[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
-//                    wallx += [SCNNode(geometry: wallxGeometry)]
-//                    print("X-axis wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
-//                    xcont = xcont + 1;
-//                    xpos = xpos + 5;
-//
-//            case 6:
-//                print("new line")
-//                xpos = 0
-//                zpos = zpos+5
-//            case 9:
-//                print("finished maze")
-//            default:
-//                print("this shouldn't happen")
-//            }
-//            i = i+1;
-//        }
-//
-//
-//
-//        for child in wallx {
-//            //print(child.position)
-//            sceneView.scene?.rootNode.addChildNode(child)
-//        }
-//
-//    }
+
     
     func initView() {
         sceneView = SCNView(frame: self.view.frame)
