@@ -35,13 +35,13 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                     1,0,1,0,1,0,1,0,1,6,
                     1,0,0,0,1,0,0,0,1,6,
                     1,1,1,1,1,1,1,1,1,9,]
-    let testMaze = [10,6,
-                    1,1,1,1,1,1,1,1,6,
-                    1,0,1,0,1,0,0,1,6,
-                    1,0,0,0,0,1,0,1,6,
-                    1,0,0,0,0,1,0,1,6,
-                    1,0,1,0,1,0,0,1,6,
-                    1,1,1,1,1,1,1,1,9,]
+    
+    let testMaze = [[1,1,1,1,1,1,1,1,1,1],
+                    [1,0,0,0,0,0,0,0,0,1],
+                    [1,0,0,0,0,0,0,0,0,1],
+                    [1,0,0,0,0,0,0,0,0,1],
+                    [1,0,0,0,0,0,0,0,0,1],
+                    [1,1,1,1,1,1,1,1,1,1]]
     
     //var gameView: SCNView!
     //var gameScene: SCNScene!
@@ -79,33 +79,38 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         var xpos = 0.0
         var zpos = 0.0
         let ypos = 2.5
-        var i = 2
+        var i = 0
         var xcont = 0
         
+        print(testMaze.count)
+        
         while(i<testMaze.count){
-            switch (testMaze[i]){
-            case 0:
-                print("blank")
-                xpos=xpos+5
-            case 1:
-                    wallx.append(SCNNode(geometry: wallxGeometry))
-                    wallx[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
-                    wallx += [SCNNode(geometry: wallxGeometry)]
-                    print("X-axis wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
-                    xcont = xcont + 1;
-                    xpos = xpos + 5;
-                
-            case 6:
-                print("new line")
-                xpos = 0
-                zpos = zpos+5
-            case 9:
-                print("finished maze")
-            default:
-                print("this shouldn't happen")
-            }
+            
+//            switch (testMaze[i]){
+            for item in testMaze[i]{
+                switch (item){
+                    case 0:
+                        print("blank")
+                        xpos=xpos+5
+                    
+                    case 1:
+                        wallx.append(SCNNode(geometry: wallxGeometry))
+                        wallx[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
+                        wallx += [SCNNode(geometry: wallxGeometry)]
+                        print("X-axis wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
+                        xcont = xcont + 1;
+                        xpos = xpos + 5;
+
+                default:
+                    print("this shouldn't happen")
+                }
+        }
+            print("Array",i)
+            xpos = 0
+            zpos = zpos+5
             i = i+1;
         }
+        print("finished maze")
         
         
         
@@ -113,8 +118,52 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
             //print(child.position)
             sceneView.scene?.rootNode.addChildNode(child)
         }
-
+        
     }
+    
+//    func loadMaze() {
+//        let wallxGeometry = SCNBox(width: 5, height: 5, length: 5, chamferRadius: 0)
+//        wallxGeometry.materials = [materialRed]
+//
+//        var xpos = 0.0
+//        var zpos = 0.0
+//        let ypos = 2.5
+//        var i = 2
+//        var xcont = 0
+//
+//        while(i<testMaze.count){
+//            switch (testMaze[i]){
+//            case 0:
+//                print("blank")
+//                xpos=xpos+5
+//            case 1:
+//                    wallx.append(SCNNode(geometry: wallxGeometry))
+//                    wallx[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
+//                    wallx += [SCNNode(geometry: wallxGeometry)]
+//                    print("X-axis wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
+//                    xcont = xcont + 1;
+//                    xpos = xpos + 5;
+//
+//            case 6:
+//                print("new line")
+//                xpos = 0
+//                zpos = zpos+5
+//            case 9:
+//                print("finished maze")
+//            default:
+//                print("this shouldn't happen")
+//            }
+//            i = i+1;
+//        }
+//
+//
+//
+//        for child in wallx {
+//            //print(child.position)
+//            sceneView.scene?.rootNode.addChildNode(child)
+//        }
+//
+//    }
     
     func initView() {
         sceneView = SCNView(frame: self.view.frame)
