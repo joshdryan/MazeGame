@@ -22,8 +22,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     
     //objects to be added to scene
     var lookAtNode = SCNNode()
-    var wallz: [SCNNode] = []
-    var wallx: [SCNNode] = []
+    var wall: [SCNNode] = []
     let materialGreen = SCNMaterial()               //set green material
     let materialRed = SCNMaterial()                 //set red material
     let materialBlue = SCNMaterial()                //set blue material
@@ -36,12 +35,12 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                     1,0,0,0,1,0,0,0,1,6,
                     1,1,1,1,1,1,1,1,1,9,]
     let testMaze = [10,6,
-                    1,1,1,1,1,1,1,1,6,
-                    1,0,1,0,1,0,0,1,6,
-                    1,0,0,0,0,1,0,1,6,
-                    1,0,0,0,0,1,0,1,6,
-                    1,0,1,0,1,0,0,1,6,
-                    1,1,1,1,1,1,1,1,9,]
+                    1,1,1,1,1,1,1,1,1,6,
+                    1,0,1,0,1,0,0,0,1,6,
+                    1,0,0,0,0,0,1,0,1,6,
+                    1,0,0,0,0,0,1,0,1,6,
+                    1,0,1,0,1,0,0,0,1,6,
+                    1,1,1,1,1,1,1,1,1,9,]
     
     //var gameView: SCNView!
     //var gameScene: SCNScene!
@@ -73,14 +72,14 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     }
     
     func loadMaze() {
-        let wallxGeometry = SCNBox(width: 5, height: 5, length: 5, chamferRadius: 0)
-        wallxGeometry.materials = [materialRed]
+        let wallGeometry = SCNBox(width: 5, height: 8, length: 5, chamferRadius: 0)
+        wallGeometry.materials = [materialRed]
         
         var xpos = 0.0
         var zpos = 0.0
-        let ypos = 2.5
+        let ypos = 4
         var i = 2
-        var xcont = 0
+        var cont = 0
         
         while(i<testMaze.count){
             switch (testMaze[i]){
@@ -88,13 +87,12 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                 print("blank")
                 xpos=xpos+5
             case 1:
-                    wallx.append(SCNNode(geometry: wallxGeometry))
-                    wallx[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
-                    wallx += [SCNNode(geometry: wallxGeometry)]
-                    print("X-axis wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
-                    xcont = xcont + 1;
+                    wall.append(SCNNode(geometry: wallGeometry))
+                    wall[cont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
+                    wall += [SCNNode(geometry: wallGeometry)]
+                    print("wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
+                    cont = cont + 1;
                     xpos = xpos + 5;
-                
             case 6:
                 print("new line")
                 xpos = 0
@@ -109,7 +107,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         
         
         
-        for child in wallx {
+        for child in wall {
             //print(child.position)
             sceneView.scene?.rootNode.addChildNode(child)
         }
