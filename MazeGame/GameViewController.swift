@@ -15,10 +15,11 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     var sceneView: SCNView!
     
     var camera = SCNNode()
+    var cameraOrbit = SCNNode()
+    
     var ground = SCNNode()
     var light = SCNNode()
     var constraint = SCNLookAtConstraint()
-    
     
     //objects to be added to scene
     var lookAtNode = SCNNode()
@@ -28,6 +29,8 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     let materialBlue = SCNMaterial()                //set blue material
     let materialPurple = SCNMaterial()              //set purple material
     let materialCyan = SCNMaterial()                //set cyan material
+    
+    
     let testMazeB = [10,6,
                     1,1,1,1,1,1,1,1,1,6,
                     1,0,1,0,0,0,1,0,1,6,
@@ -53,6 +56,27 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         initMaterial()
         initElements()
         loadMaze()
+        
+//        let wallGeometry = SCNBox(width: 5, height: 8, length: 5, chamferRadius: 0)
+//        wallGeometry.materials = [materialRed]
+//        
+//
+//        let x = SCNNode(geometry: wallGeometry)
+//
+//        x.position = SCNVector3(x: 0, y: 4, z: 0)
+//
+//        x.addChildNode(SCNNode(geometry: wallGeometry))
+//        x.addChildNode(SCNNode(geometry: wallGeometry))
+//        x.addChildNode(SCNNode(geometry: wallGeometry))
+//
+//        x.childNodes[0].position = SCNVector3(x: 0, y: 0, z: -5)
+//        x.childNodes[1].position = SCNVector3(x: -5, y: 0, z: 0)
+//        x.childNodes[2].position = SCNVector3(x: -5, y: 0, z: -5)
+//
+//        sceneView.scene?.rootNode.addChildNode(x)
+        
+        
+        
         //move()
     }
     
@@ -77,7 +101,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         
         var xpos = 0.0
         var zpos = 0.0
-        let ypos = 2.5
+        let ypos = 4
         var i = 0
         var xcont = 0
         
@@ -95,7 +119,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                     case 1:
                         wall.append(SCNNode(geometry: wallGeometry))
                         wall[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
-                        wall += [SCNNode(geometry: wallGeometry)]
+//                        wall += [SCNNode(geometry: wallGeometry)]
                         print("X-axis wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
                         xcont = xcont + 1;
                         xpos = xpos + 5;
@@ -114,9 +138,15 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         
         
         for child in wall {
-            //print(child.position)
+            print(child.position)
             sceneView.scene?.rootNode.addChildNode(child)
         }
+        
+        let lookAtGeometry = SCNCylinder(radius: 1.0, height: 15.0)
+        lookAtGeometry.materials = [materialCyan]
+        
+        lookAtNode.geometry = lookAtGeometry
+        sceneView.scene?.rootNode.addChildNode(lookAtNode)
         
     }
 
@@ -133,17 +163,37 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         groundGeometry.materials = [groundMaterial]
         ground = SCNNode(geometry: groundGeometry)
         
-        lookAtNode.position = SCNVector3(x: 100, y: 0, z: 100)
+        let lookAtX = (Float(testMaze[0].count / 2)) * 5
+        let lookAtZ = (Float(testMaze.count / 2)) * 5
+        
+        lookAtNode.position = SCNVector3(x: lookAtX, y: 0, z: lookAtZ)
         
         let camera = SCNCamera()
+
         //camera.zFar = 10000
         self.camera = SCNNode()
         self.camera.camera = camera
         constraint = SCNLookAtConstraint(target: lookAtNode)
         constraint.isGimbalLockEnabled = true
+       
         self.camera.constraints = [constraint]
-        self.camera.position = SCNVector3(x: 0, y: 5, z: 0)
-        self.camera.position = SCNVector3(x: -20, y: 50, z: -40) //temp
+        
+        print(self.camera.pivot)
+        
+//        self.camera.pivot = SCNMatrix4MakeTranslation(lookAtX, 0.0,lookAtZ)
+        print(self.camera.worldTransform)
+//        self.camera.position = SCNVector3(x: -20, y: 50, z: -40)
+        self.camera.position = SCNVector3(x: lookAtX, y: 100, z: lookAtZ) //temp
+//        cameraOrbit = SCNNode()
+        cameraOrbit.addChildNode(self.camera)
+//        lookAtNode.addChildNode(cameraOrbit)
+        
+//        pitch
+        cameraOrbit.eulerAngles.x = Float(0)
+//        yaw
+//        cameraOrbit.eulerAngles.y = Float(M_PI_4*3)
+//        roll
+        cameraOrbit.eulerAngles.y = Float(1000)
         
         let ambientLight = SCNLight()
         ambientLight.color = UIColor.darkGray
@@ -160,6 +210,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         light = SCNNode()
         light.light = spotLight
         light.position = SCNVector3(x: -25, y: 15, z: -25)
+//        light.position = SCNVector3(x: lookAtX, y: 100, z: lookAtZ)
         light.constraints = [constraint]
     }
     
@@ -174,7 +225,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     
     func initElements() {
         sceneView.allowsCameraControl = true
-        sceneView.scene?.rootNode.addChildNode(self.camera)
+        sceneView.scene?.rootNode.addChildNode(cameraOrbit)
         sceneView.scene?.rootNode.addChildNode(ground)
         sceneView.scene?.rootNode.addChildNode(light)
 
