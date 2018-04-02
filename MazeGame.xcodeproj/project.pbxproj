@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		03FB7313204469E70080AA59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FB7312204469E70080AA59 /* AppDelegate.swift */; };
 		03FB731B204469E70080AA59 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FB731A204469E70080AA59 /* GameViewController.swift */; };
-		03FB731E204469E70080AA59 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03FB731C204469E70080AA59 /* Main.storyboard */; };
 		03FB7320204469E70080AA59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03FB731F204469E70080AA59 /* Assets.xcassets */; };
-		03FB7323204469E70080AA59 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03FB7321204469E70080AA59 /* LaunchScreen.storyboard */; };
 		03FB732E204469E70080AA59 /* MazeGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FB732D204469E70080AA59 /* MazeGameTests.swift */; };
 		03FB7339204469E70080AA59 /* MazeGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FB7338204469E70080AA59 /* MazeGameUITests.swift */; };
+		65B310B2207288E9008B2C4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65B310B1207288E9008B2C4D /* Main.storyboard */; };
+		65B310B420728944008B2C4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65B310B320728944008B2C4D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,9 +37,7 @@
 		03FB730F204469E70080AA59 /* MazeGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MazeGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FB7312204469E70080AA59 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03FB731A204469E70080AA59 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		03FB731D204469E70080AA59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		03FB731F204469E70080AA59 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		03FB7322204469E70080AA59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		03FB7324204469E70080AA59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03FB7329204469E70080AA59 /* MazeGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MazeGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FB732D204469E70080AA59 /* MazeGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeGameTests.swift; sourceTree = "<group>"; };
@@ -47,6 +45,8 @@
 		03FB7334204469E70080AA59 /* MazeGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MazeGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FB7338204469E70080AA59 /* MazeGameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeGameUITests.swift; sourceTree = "<group>"; };
 		03FB733A204469E70080AA59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65B310B1207288E9008B2C4D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		65B310B320728944008B2C4D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,9 +99,9 @@
 			children = (
 				03FB7312204469E70080AA59 /* AppDelegate.swift */,
 				03FB731A204469E70080AA59 /* GameViewController.swift */,
-				03FB731C204469E70080AA59 /* Main.storyboard */,
+				65B310B1207288E9008B2C4D /* Main.storyboard */,
 				03FB731F204469E70080AA59 /* Assets.xcassets */,
-				03FB7321204469E70080AA59 /* LaunchScreen.storyboard */,
+				65B310B320728944008B2C4D /* LaunchScreen.storyboard */,
 				03FB7324204469E70080AA59 /* Info.plist */,
 			);
 			path = MazeGame;
@@ -232,9 +232,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03FB731E204469E70080AA59 /* Main.storyboard in Resources */,
+				65B310B420728944008B2C4D /* LaunchScreen.storyboard in Resources */,
+				65B310B2207288E9008B2C4D /* Main.storyboard in Resources */,
 				03FB7320204469E70080AA59 /* Assets.xcassets in Resources */,
-				03FB7323204469E70080AA59 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,25 +294,6 @@
 			targetProxy = 03FB7335204469E70080AA59 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		03FB731C204469E70080AA59 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				03FB731D204469E70080AA59 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		03FB7321204469E70080AA59 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				03FB7322204469E70080AA59 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		03FB733B204469E70080AA59 /* Debug */ = {
