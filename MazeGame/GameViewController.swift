@@ -38,12 +38,49 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                     1,0,0,0,1,0,0,0,1,6,
                     1,1,1,1,1,1,1,1,1,9,]
     
-    let testMaze = [[1,1,1,1,1,1,1,1,1,1],
-                    [1,0,0,0,0,0,0,0,0,1],
-                    [1,0,0,0,0,0,0,0,0,1],
-                    [1,0,0,0,0,0,0,0,0,1],
-                    [1,0,0,0,0,0,0,0,0,1],
-                    [1,1,1,1,1,1,1,1,1,1]]
+//    let testMaze = [[1,1,1,1,1,1,1,1,1,1],
+//                    [1,0,0,0,0,0,0,0,0,1],
+//                    [1,0,0,0,0,0,0,0,0,1],
+//                    [1,0,0,0,0,0,0,0,0,1],
+//                    [1,0,0,0,0,0,0,0,0,1],
+//                    [1,1,1,1,1,1,1,1,1,1]]
+    
+//    let testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                    [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
+//                    [1,0,1,1,1,1,1,1,0,1,0,1,0,1,0,1],
+//                    [1,0,1,0,0,0,1,0,0,1,0,0,0,1,0,1],
+//                    [1,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1],
+//                    [1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1],
+//                    [1,1,1,1,1,0,1,1,1,1,1,1,0,1,0,1],
+//                    [0,0,1,0,0,0,0,0,0,0,1,0,0,1,0,1],
+//                    [1,0,1,1,1,1,1,1,1,0,1,0,0,0,0,1],
+//                    [1,0,1,0,0,0,0,0,1,0,1,0,1,1,0,1],
+//                    [1,0,1,0,1,1,1,0,1,0,1,0,1,1,0,1],
+//                    [1,0,0,0,1,0,1,0,1,1,1,0,1,1,0,1],
+//                    [1,1,1,1,1,0,1,0,1,1,1,0,1,1,0,1],
+//                    [1,0,0,0,0,0,1,0,0,0,1,0,0,1,0,1],
+//                    [1,0,1,1,1,1,1,1,1,0,1,1,0,1,0,1],
+//                    [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
+//                    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+    
+    //         8x8 array with walls
+    var testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
     
     //var gameView: SCNView!
     //var gameScene: SCNScene!
@@ -55,11 +92,12 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         initView()
         initMaterial()
         initElements()
+        generateMaze()
         loadMaze()
         
 //        let wallGeometry = SCNBox(width: 5, height: 8, length: 5, chamferRadius: 0)
 //        wallGeometry.materials = [materialRed]
-//        
+//
 //
 //        let x = SCNNode(geometry: wallGeometry)
 //
@@ -93,6 +131,145 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         print(SCNVector3(x: (self.camera.position.x + 5), y: 2.5, z: (self.camera.position.x + 5)))
         
         //lookAtNode.position = SCNVector3(x: lookAtNode.position.x + 5, y: 2.5, z: 0)
+    }
+    
+    func generateMaze() {
+        
+////         8x8 array with walls
+//        var testArray = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+        
+        
+//        8x8 array
+        var Array1 = [0,0,0,0,0,0,0,0,
+                      0,0,0,0,0,0,0,0,
+                      0,0,0,0,0,0,0,0,
+                      0,0,0,0,0,0,0,0,
+                      0,0,0,0,0,0,0,0,
+                      0,0,0,0,0,0,0,0,
+                      0,0,0,0,0,0,0,0,
+                      0,0,0,0,0,0,0,0]
+        
+        let mazeSize = Array1.count - 1
+        
+        var currentPos = 0
+        var newPos = 0
+
+//        random starting position, change int to UInt32 for compatibility
+        let startingPos = Int(arc4random_uniform(UInt32(mazeSize)))
+        print(startingPos)
+        
+        currentPos = startingPos
+        
+        Array1[startingPos] = 1
+        
+        print(Array1)
+        while Array1.contains(0) {
+            var neighbors = [Int]()
+            var neighborPos = 0
+            
+//            Test for neighbors
+                
+//            Left neighbor
+            neighborPos = currentPos % 8
+            if (neighborPos - 1) >= 0{
+                neighborPos = currentPos-1
+                if Array1[neighborPos] == 0 {
+                    neighbors.append(neighborPos)
+                }
+            }
+            
+//            Right neighbor
+            neighborPos = currentPos % 8
+            if (neighborPos + 1) != 8{
+                neighborPos = currentPos+1
+                if Array1[neighborPos] == 0 {
+                    neighbors.append(neighborPos)
+                }
+            }
+            
+//            Top neighbor
+            neighborPos = currentPos-8
+            if neighborPos >= 0{
+                if Array1[neighborPos] == 0 {
+                    neighbors.append(neighborPos)
+                }
+            }
+            
+//            Bottom neighbor
+            neighborPos = currentPos+8
+            if neighborPos <= 63{
+                if Array1[neighborPos] == 0 {
+                    neighbors.append(neighborPos)
+                }
+            }
+            
+            
+            if neighbors.count > 0 {
+                let randNeighbor = Int(arc4random_uniform(UInt32(neighbors.count-1)))
+            
+                Array1[neighbors[randNeighbor]] = 1
+                newPos = neighbors[randNeighbor]
+                
+            }
+            else {
+                
+                newPos = 0
+                
+                while newPos == 0 {
+                    let tempPos = Int(arc4random_uniform(UInt32(mazeSize)))
+                    if Array1[tempPos] == 0 {
+                        newPos = tempPos
+                        Array1[newPos] = 1
+                        currentPos = newPos
+                    }
+                }
+            }
+            
+            
+            if abs(currentPos-newPos) == 1 {
+                var col = currentPos % 8
+                var row = ((currentPos-col) / 8) + 1
+                
+                col = (((col+1)*2) - 1) + (newPos-currentPos)
+                row = (row*2) - 1
+                
+                print("Right/Left")
+                
+                print(testMaze)
+                print(row, col)
+                
+                testMaze[row][col] = 0
+                print(testMaze)
+            }
+            else if abs(currentPos-newPos) == 8{
+                var col = currentPos % 8
+                var row = ((currentPos-col) / 8) + 1
+                
+                col = (col*2)
+                row = (row*2) - 1
+                
+//                testArray[row][col] = 0
+            }
+            currentPos = newPos
+//            print(Array1.filter{$0 == 1}.count)
+        }
+//        print(Array1)
     }
     
     func loadMaze() {
@@ -182,18 +359,18 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         
 //        self.camera.pivot = SCNMatrix4MakeTranslation(lookAtX, 0.0,lookAtZ)
         print(self.camera.worldTransform)
-//        self.camera.position = SCNVector3(x: -20, y: 50, z: -40)
-        self.camera.position = SCNVector3(x: lookAtX, y: 100, z: lookAtZ) //temp
+        self.camera.position = SCNVector3(x: -20, y: 100, z: -40)
+//        self.camera.position = SCNVector3(x: lookAtX, y: 100, z: lookAtZ) //temp
 //        cameraOrbit = SCNNode()
         cameraOrbit.addChildNode(self.camera)
 //        lookAtNode.addChildNode(cameraOrbit)
         
 //        pitch
-        cameraOrbit.eulerAngles.x = Float(0)
+//        cameraOrbit.eulerAngles.x = Float(0)
 //        yaw
 //        cameraOrbit.eulerAngles.y = Float(M_PI_4*3)
 //        roll
-        cameraOrbit.eulerAngles.y = Float(1000)
+//        cameraOrbit.eulerAngles.y = Float(1000)
         
         let ambientLight = SCNLight()
         ambientLight.color = UIColor.darkGray
