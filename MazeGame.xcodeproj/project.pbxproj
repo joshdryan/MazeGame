@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		03FB7313204469E70080AA59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FB7312204469E70080AA59 /* AppDelegate.swift */; };
-		03FB7315204469E70080AA59 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 03FB7314204469E70080AA59 /* GameScene.sks */; };
-		03FB7317204469E70080AA59 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 03FB7316204469E70080AA59 /* Actions.sks */; };
-		03FB7319204469E70080AA59 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FB7318204469E70080AA59 /* GameScene.swift */; };
 		03FB731B204469E70080AA59 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FB731A204469E70080AA59 /* GameViewController.swift */; };
 		03FB731E204469E70080AA59 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03FB731C204469E70080AA59 /* Main.storyboard */; };
 		03FB7320204469E70080AA59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03FB731F204469E70080AA59 /* Assets.xcassets */; };
@@ -39,9 +36,6 @@
 /* Begin PBXFileReference section */
 		03FB730F204469E70080AA59 /* MazeGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MazeGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FB7312204469E70080AA59 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		03FB7314204469E70080AA59 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		03FB7316204469E70080AA59 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
-		03FB7318204469E70080AA59 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		03FB731A204469E70080AA59 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		03FB731D204469E70080AA59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		03FB731F204469E70080AA59 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -104,9 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				03FB7312204469E70080AA59 /* AppDelegate.swift */,
-				03FB7314204469E70080AA59 /* GameScene.sks */,
-				03FB7316204469E70080AA59 /* Actions.sks */,
-				03FB7318204469E70080AA59 /* GameScene.swift */,
 				03FB731A204469E70080AA59 /* GameViewController.swift */,
 				03FB731C204469E70080AA59 /* Main.storyboard */,
 				03FB731F204469E70080AA59 /* Assets.xcassets */,
@@ -197,7 +188,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Bootleg Mobile";
 				TargetAttributes = {
 					03FB730E204469E70080AA59 = {
@@ -242,10 +233,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				03FB731E204469E70080AA59 /* Main.storyboard in Resources */,
-				03FB7315204469E70080AA59 /* GameScene.sks in Resources */,
 				03FB7320204469E70080AA59 /* Assets.xcassets in Resources */,
 				03FB7323204469E70080AA59 /* LaunchScreen.storyboard in Resources */,
-				03FB7317204469E70080AA59 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +259,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03FB7319204469E70080AA59 /* GameScene.swift in Sources */,
 				03FB731B204469E70080AA59 /* GameViewController.swift in Sources */,
 				03FB7313204469E70080AA59 /* AppDelegate.swift in Sources */,
 			);
@@ -341,6 +329,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -348,6 +337,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -398,6 +388,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -405,6 +396,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
