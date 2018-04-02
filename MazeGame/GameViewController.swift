@@ -261,10 +261,13 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                 var col = currentPos % 8
                 var row = ((currentPos-col) / 8) + 1
                 
-                col = (col*2)
-                row = (row*2) - 1
+                let newCol = newPos % 8
+                let newRow = ((newPos-newCol)/8) + 1
                 
-//                testArray[row][col] = 0
+                col = ((col+1)*2) - 1
+                row = ((row*2) - 1) + (newRow - row)
+                
+                testMaze[row][col] = 0
             }
             currentPos = newPos
 //            print(Array1.filter{$0 == 1}.count)
