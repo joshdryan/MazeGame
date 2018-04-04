@@ -163,8 +163,8 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         //print(self.camera.pivot)
         //self.camera.pivot = SCNMatrix4MakeTranslation(lookAtX, 0.0,lookAtZ)
         //print(self.camera.worldTransform)
-        self.camera.position = SCNVector3(x: 2.5, y: 4, z: 2.5)
-        //self.camera.position = SCNVector3(x: lookAtX, y: 100, z: lookAtZ) //temp
+//        self.camera.position = SCNVector3(x: 2.5, y: 4, z: 2.5)
+        self.camera.position = SCNVector3(x: lookAtX, y: 150, z: lookAtZ) //temp
 //        cameraOrbit = SCNNode()
         cameraOrbit.addChildNode(self.camera)
 //        lookAtNode.addChildNode(cameraOrbit)
@@ -215,6 +215,8 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     }
     
     func generateMaze() {
+        
+//        https://en.wikipedia.org/wiki/Maze_generation_algorithm
         
         ////         8x8 array with walls
         //        var testArray = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -273,6 +275,13 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                 if Array1[neighborPos] == 0 {
                     neighbors.append(neighborPos)
                 }
+                else {
+                    let visitChance = Int(arc4random_uniform(UInt32(100)))
+                    if visitChance < 50 {
+                        neighbors.append(neighborPos)
+                    }
+                }
+                
             }
             
             //            Right neighbor
@@ -282,6 +291,12 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                 if Array1[neighborPos] == 0 {
                     neighbors.append(neighborPos)
                 }
+                else {
+                    let visitChance = Int(arc4random_uniform(UInt32(100)))
+                    if visitChance < 50 {
+                        neighbors.append(neighborPos)
+                    }
+                }
             }
             
             //            Top neighbor
@@ -290,6 +305,12 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                 if Array1[neighborPos] == 0 {
                     neighbors.append(neighborPos)
                 }
+                else {
+                    let visitChance = Int(arc4random_uniform(UInt32(100)))
+                    if visitChance < 50 {
+                        neighbors.append(neighborPos)
+                    }
+                }
             }
             
             //            Bottom neighbor
@@ -297,6 +318,12 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
             if neighborPos <= 63{
                 if Array1[neighborPos] == 0 {
                     neighbors.append(neighborPos)
+                }
+                else {
+                    let visitChance = Int(arc4random_uniform(UInt32(100)))
+                    if visitChance < 50 {
+                        neighbors.append(neighborPos)
+                    }
                 }
             }
             
