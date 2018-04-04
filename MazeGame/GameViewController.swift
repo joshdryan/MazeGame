@@ -9,17 +9,18 @@
 import UIKit
 import QuartzCore
 import SceneKit
+import SpriteKit
 
-class GameViewController: UIViewController, UIGestureRecognizerDelegate{
+class GameViewController: UIViewController{
+    
     
     var sceneView: SCNView!
-    
     var camera = SCNNode()
     var cameraOrbit = SCNNode()
-    
     var ground = SCNNode()
     var light = SCNNode()
     var constraint = SCNLookAtConstraint()
+    
     
     //objects to be added to scene
     var lookAtNode = SCNNode()
@@ -82,40 +83,33 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
 //                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
 //                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
     
-    //var gameView: SCNView!
-    //var gameScene: SCNScene!
-    //var camaraNode: SCNNode!
-    //var targetCreationTime: TimeInterval = 0
+    var gameView: SCNView!
+    var gameScene: SCNScene!
+    var camaraNode: SCNNode!
+    var targetCreationTime: TimeInterval = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         initView()
         initMaterial()
         initElements()
 //        generateMaze()
         loadMaze()
-        
-//        let wallGeometry = SCNBox(width: 5, height: 8, length: 5, chamferRadius: 0)
-//        wallGeometry.materials = [materialRed]
-//
-//
-//        let x = SCNNode(geometry: wallGeometry)
-//
-//        x.position = SCNVector3(x: 0, y: 4, z: 0)
-//
-//        x.addChildNode(SCNNode(geometry: wallGeometry))
-//        x.addChildNode(SCNNode(geometry: wallGeometry))
-//        x.addChildNode(SCNNode(geometry: wallGeometry))
-//
-//        x.childNodes[0].position = SCNVector3(x: 0, y: 0, z: -5)
-//        x.childNodes[1].position = SCNVector3(x: -5, y: 0, z: 0)
-//        x.childNodes[2].position = SCNVector3(x: -5, y: 0, z: -5)
-//
-//        sceneView.scene?.rootNode.addChildNode(x)
-        
-        
-        
+        //showMenu()
         //move()
+    }
+    
+    func showHud() {
+        let myHud = hud(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        
+        self.view?.addSubview(myHud)
+    } 
+    func showMenu(){
+        let myHud = menu(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        
+        self.view?.addSubview(myHud)
+        
     }
     
     //is not working yet
@@ -135,6 +129,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     
     func initView() {
         sceneView = SCNView(frame: self.view.frame)
+        sceneView.antialiasingMode = .multisampling2X
         sceneView.scene = SCNScene()
         self.view.addSubview(sceneView)
         
@@ -215,10 +210,11 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
 //        sceneView.scene?.lookAtNode.addChildNode(cameraOrbit)
         sceneView.scene?.rootNode.addChildNode(ground)
         sceneView.scene?.rootNode.addChildNode(light)
-
     }
     
     func generateMaze() {
+        
+//        https://en.wikipedia.org/wiki/Maze_generation_algorithm
         
         ////         8x8 array with walls
         //        var testArray = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -277,6 +273,13 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                 if Array1[neighborPos] == 0 {
                     neighbors.append(neighborPos)
                 }
+                else {
+                    let visitChance = Int(arc4random_uniform(UInt32(100)))
+                    if visitChance < 50 {
+                        neighbors.append(neighborPos)
+                    }
+                }
+                
             }
             
             //            Right neighbor
@@ -286,6 +289,12 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                 if Array1[neighborPos] == 0 {
                     neighbors.append(neighborPos)
                 }
+                else {
+                    let visitChance = Int(arc4random_uniform(UInt32(100)))
+                    if visitChance < 50 {
+                        neighbors.append(neighborPos)
+                    }
+                }
             }
             
             //            Top neighbor
@@ -294,6 +303,12 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                 if Array1[neighborPos] == 0 {
                     neighbors.append(neighborPos)
                 }
+                else {
+                    let visitChance = Int(arc4random_uniform(UInt32(100)))
+                    if visitChance < 50 {
+                        neighbors.append(neighborPos)
+                    }
+                }
             }
             
             //            Bottom neighbor
@@ -301,6 +316,12 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
             if neighborPos <= 63{
                 if Array1[neighborPos] == 0 {
                     neighbors.append(neighborPos)
+                }
+                else {
+                    let visitChance = Int(arc4random_uniform(UInt32(100)))
+                    if visitChance < 50 {
+                        neighbors.append(neighborPos)
+                    }
                 }
             }
             
@@ -396,8 +417,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         }
         print("finished maze")
         
-        
-        
         for child in wall {
             print(child.position)
             sceneView.scene?.rootNode.addChildNode(child)
@@ -410,7 +429,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         sceneView.scene?.rootNode.addChildNode(lookAtNode)
         
     }
-    
+
     override var shouldAutorotate: Bool {
         return true
     }
