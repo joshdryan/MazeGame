@@ -160,15 +160,16 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
        
         self.camera.constraints = [constraint]
         
-        print(self.camera.pivot)
-        
+        //print(self.camera.pivot)
         //self.camera.pivot = SCNMatrix4MakeTranslation(lookAtX, 0.0,lookAtZ)
-        print(self.camera.worldTransform)
-        self.camera.position = SCNVector3(x: -20, y: 100, z: -40)
-//        self.camera.position = SCNVector3(x: lookAtX, y: 100, z: lookAtZ) //temp
+        //print(self.camera.worldTransform)
+        self.camera.position = SCNVector3(x: 2.5, y: 4, z: 2.5)
+        //self.camera.position = SCNVector3(x: lookAtX, y: 100, z: lookAtZ) //temp
 //        cameraOrbit = SCNNode()
         cameraOrbit.addChildNode(self.camera)
 //        lookAtNode.addChildNode(cameraOrbit)
+        
+        //self.camera.transform();
         
 //        pitch
 //        cameraOrbit.eulerAngles.x = Float(0)
@@ -329,13 +330,13 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                 col = (((col+1)*2) - 1) + (newPos-currentPos)
                 row = (row*2) - 1
                 
-                print("Right/Left")
+                //print("Right/Left")
                 
-                print(testMaze)
-                print(row, col)
+                //print(testMaze)
+                //print(row, col)
                 
                 testMaze[row][col] = 0
-                print(testMaze)
+                //print(testMaze)
             }
             else if abs(currentPos-newPos) == 8{
                 var col = currentPos % 8
@@ -365,18 +366,18 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         
         print(testMaze.count)
         
-        while(i<testMaze.count){
+        while(i < testMaze.count){
             
             for item in testMaze[i]{
                 switch (item){
                 case 0:
-                    print("blank")
+                    //print("blank")
                     xpos=xpos+5
                     
                 case 1:
                     wall.append(SCNNode(geometry: wallGeometry))
                     wall[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
-                    print("X-axis wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
+                    //print("X-axis wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
                     xcont = xcont + 1;
                     xpos = xpos + 5;
                     
@@ -384,7 +385,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                     print("this shouldn't happen")
                 }
             }
-            print("Array",i)
+            //print("Array",i)
             xpos = 0
             zpos = zpos+5
             i = i+1;
