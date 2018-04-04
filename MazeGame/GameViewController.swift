@@ -9,14 +9,13 @@
 import UIKit
 import QuartzCore
 import SceneKit
+import SpriteKit
 
 class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     
     var sceneView: SCNView!
-    
     var camera = SCNNode()
     var cameraOrbit = SCNNode()
-    
     var ground = SCNNode()
     var light = SCNNode()
     var constraint = SCNLookAtConstraint()
@@ -30,20 +29,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     let materialPurple = SCNMaterial()              //set purple material
     let materialCyan = SCNMaterial()                //set cyan material
     
-    
-    let testMazeB = [10,6,
-                    1,1,1,1,1,1,1,1,1,6,
-                    1,0,1,0,0,0,1,0,1,6,
-                    1,0,1,0,1,0,1,0,1,6,
-                    1,0,0,0,1,0,0,0,1,6,
-                    1,1,1,1,1,1,1,1,1,9,]
-    
-    /*let testMaze = [[1,1,1,1,1,1,1,1,1,1],
-                    [1,0,0,0,0,0,0,0,0,1],
-                    [1,0,0,0,0,0,0,0,0,1],
-                    [1,0,0,0,0,0,0,0,0,1],
-                    [1,0,0,0,0,0,0,0,0,1],
-                    [1,1,1,1,1,1,1,1,1,1]]*/
     
 //    let testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 //                    [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
@@ -82,10 +67,10 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                      [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
                      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
     
-    //var gameView: SCNView!
-    //var gameScene: SCNScene!
-    //var camaraNode: SCNNode!
-    //var targetCreationTime: TimeInterval = 0
+    var gameView: SCNView!
+    var gameScene: SCNScene!
+    var camaraNode: SCNNode!
+    var targetCreationTime: TimeInterval = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,27 +79,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         initElements()
         generateMaze()
         loadMaze()
-        
-//        let wallGeometry = SCNBox(width: 5, height: 8, length: 5, chamferRadius: 0)
-//        wallGeometry.materials = [materialRed]
-//
-//
-//        let x = SCNNode(geometry: wallGeometry)
-//
-//        x.position = SCNVector3(x: 0, y: 4, z: 0)
-//
-//        x.addChildNode(SCNNode(geometry: wallGeometry))
-//        x.addChildNode(SCNNode(geometry: wallGeometry))
-//        x.addChildNode(SCNNode(geometry: wallGeometry))
-//
-//        x.childNodes[0].position = SCNVector3(x: 0, y: 0, z: -5)
-//        x.childNodes[1].position = SCNVector3(x: -5, y: 0, z: 0)
-//        x.childNodes[2].position = SCNVector3(x: -5, y: 0, z: -5)
-//
-//        sceneView.scene?.rootNode.addChildNode(x)
-        
-        
-        
         //move()
     }
     
@@ -133,8 +97,14 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         //lookAtNode.position = SCNVector3(x: lookAtNode.position.x + 5, y: 2.5, z: 0)
     }
     
+    func initMenu() {
+        
+        
+    }
+    
     func initView() {
         sceneView = SCNView(frame: self.view.frame)
+        sceneView.antialiasingMode = .multisampling2X
         sceneView.scene = SCNScene()
         self.view.addSubview(sceneView)
         
@@ -211,7 +181,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         sceneView.scene?.rootNode.addChildNode(cameraOrbit)
         sceneView.scene?.rootNode.addChildNode(ground)
         sceneView.scene?.rootNode.addChildNode(light)
-
     }
     
     func generateMaze() {
@@ -392,8 +361,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         }
         print("finished maze")
         
-        
-        
         for child in wall {
             print(child.position)
             sceneView.scene?.rootNode.addChildNode(child)
@@ -406,7 +373,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         sceneView.scene?.rootNode.addChildNode(lookAtNode)
         
     }
-    
+
     override var shouldAutorotate: Bool {
         return true
     }
