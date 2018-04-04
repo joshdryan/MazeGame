@@ -11,7 +11,8 @@ import QuartzCore
 import SceneKit
 import SpriteKit
 
-class GameViewController: UIViewController, UIGestureRecognizerDelegate{
+class GameViewController: UIViewController{
+    
     
     var sceneView: SCNView!
     var camera = SCNNode()
@@ -79,17 +80,23 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         initView()
         initMaterial()
         initElements()
-        //showHud()
+        showHud()
         generateMaze()
         loadMaze()
+        //showMenu()
         //move()
     }
-    
     
     func showHud() {
         let myHud = hud(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         
         self.view?.addSubview(myHud)
+    } 
+    func showMenu(){
+        let myHud = menu(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        
+        self.view?.addSubview(myHud)
+        
     }
     
     //is not working yet
