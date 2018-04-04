@@ -350,7 +350,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         
         let camera = SCNCamera()
 
-        //camera.zFar = 10000
+        camera.zFar = 10000
         self.camera = SCNNode()
         self.camera.camera = camera
         constraint = SCNLookAtConstraint(target: lookAtNode)
