@@ -20,6 +20,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     var light = SCNNode()
     var constraint = SCNLookAtConstraint()
     
+    
     //objects to be added to scene
     var lookAtNode = SCNNode()
     var wall: [SCNNode] = []
@@ -74,12 +75,21 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         initView()
         initMaterial()
         initElements()
+        //showHud()
         generateMaze()
         loadMaze()
         //move()
+    }
+    
+    
+    func showHud() {
+        let myHud = hud(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        
+        self.view?.addSubview(myHud)
     }
     
     //is not working yet
@@ -95,11 +105,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         //print(SCNVector3(x: (self.camera.position.x + 5), y: 2.5, z: (self.camera.position.x + 5)))
         
         //lookAtNode.position = SCNVector3(x: lookAtNode.position.x + 5, y: 2.5, z: 0)
-    }
-    
-    func initMenu() {
-        
-        
     }
     
     func initView() {
