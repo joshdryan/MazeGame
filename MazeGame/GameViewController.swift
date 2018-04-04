@@ -45,42 +45,42 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
                     [1,0,0,0,0,0,0,0,0,1],
                     [1,1,1,1,1,1,1,1,1,1]]*/
     
-//    let testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//                    [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
-//                    [1,0,1,1,1,1,1,1,0,1,0,1,0,1,0,1],
-//                    [1,0,1,0,0,0,1,0,0,1,0,0,0,1,0,1],
-//                    [1,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1],
-//                    [1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1],
-//                    [1,1,1,1,1,0,1,1,1,1,1,1,0,1,0,1],
-//                    [0,0,1,0,0,0,0,0,0,0,1,0,0,1,0,1],
-//                    [1,0,1,1,1,1,1,1,1,0,1,0,0,0,0,1],
-//                    [1,0,1,0,0,0,0,0,1,0,1,0,1,1,0,1],
-//                    [1,0,1,0,1,1,1,0,1,0,1,0,1,1,0,1],
-//                    [1,0,0,0,1,0,1,0,1,1,1,0,1,1,0,1],
-//                    [1,1,1,1,1,0,1,0,1,1,1,0,1,1,0,1],
-//                    [1,0,0,0,0,0,1,0,0,0,1,0,0,1,0,1],
-//                    [1,0,1,1,1,1,1,1,1,0,1,1,0,1,0,1],
-//                    [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
-//                    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+    var testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                    [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
+                    [1,0,1,1,1,1,1,1,0,1,0,1,0,1,0,1],
+                    [1,0,1,0,0,0,1,0,0,1,0,0,0,1,0,1],
+                    [1,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1],
+                    [1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1],
+                    [1,1,1,1,1,0,1,1,1,1,1,1,0,1,0,1],
+                    [0,0,1,0,0,0,0,0,0,0,1,0,0,1,0,1],
+                    [1,0,1,1,1,1,1,1,1,0,1,0,0,0,0,1],
+                    [1,0,1,0,0,0,0,0,1,0,1,0,1,1,0,1],
+                    [1,0,1,0,1,1,1,0,1,0,1,0,1,1,0,1],
+                    [1,0,0,0,1,0,1,0,1,1,1,0,1,1,0,1],
+                    [1,1,1,1,1,0,1,0,1,1,1,0,1,1,0,1],
+                    [1,0,0,0,0,0,1,0,0,0,1,0,0,1,0,1],
+                    [1,0,1,1,1,1,1,1,1,0,1,1,0,1,0,1],
+                    [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
+                    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
     
     //         8x8 array with walls
-    var testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+//    var testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
     
     //var gameView: SCNView!
     //var gameScene: SCNScene!
@@ -92,7 +92,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         initView()
         initMaterial()
         initElements()
-        generateMaze()
+//        generateMaze()
         loadMaze()
         
 //        let wallGeometry = SCNBox(width: 5, height: 8, length: 5, chamferRadius: 0)
@@ -145,10 +145,11 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         groundGeometry.materials = [groundMaterial]
         ground = SCNNode(geometry: groundGeometry)
         
+        //finding center of maze
         let lookAtX = (Float(testMaze[0].count / 2)) * 5
         let lookAtZ = (Float(testMaze.count / 2)) * 5
         
-        lookAtNode.position = SCNVector3(x: lookAtX, y: 0, z: lookAtZ)
+        lookAtNode.position = SCNVector3(x: 23.5, y: 0, z: 5)
         
         let camera = SCNCamera()
 
@@ -163,8 +164,9 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
         //print(self.camera.pivot)
         //self.camera.pivot = SCNMatrix4MakeTranslation(lookAtX, 0.0,lookAtZ)
         //print(self.camera.worldTransform)
-        self.camera.position = SCNVector3(x: 2.5, y: 4, z: 2.5)
-        //self.camera.position = SCNVector3(x: lookAtX, y: 100, z: lookAtZ) //temp
+        //self.camera.position = SCNVector3(x: 7.5, y: 5, z: 7.5)
+        self.camera.position = SCNVector3(x: 0, y: 40, z: 0)
+        //self.camera.position = SCNVector3(x: lookAtX, y: 10, z: lookAtZ) //temp
 //        cameraOrbit = SCNNode()
         cameraOrbit.addChildNode(self.camera)
 //        lookAtNode.addChildNode(cameraOrbit)
@@ -209,6 +211,8 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate{
     func initElements() {
         sceneView.allowsCameraControl = true
         sceneView.scene?.rootNode.addChildNode(cameraOrbit)
+        
+//        sceneView.scene?.lookAtNode.addChildNode(cameraOrbit)
         sceneView.scene?.rootNode.addChildNode(ground)
         sceneView.scene?.rootNode.addChildNode(light)
 
