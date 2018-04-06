@@ -20,7 +20,8 @@ class GameViewController: UIViewController{
     var ground = SCNNode()
     var light = SCNNode()
     var constraint = SCNLookAtConstraint()
-    
+    let sW = UIScreen.main.bounds.width
+    let sH = UIScreen.main.bounds.height
     
     //objects to be added to scene
     var lookAtNode = SCNNode()
@@ -94,22 +95,60 @@ class GameViewController: UIViewController{
         initView()
         initMaterial()
         initElements()
-//        generateMaze()
+//      generateMaze()
         loadMaze()
-        //showMenu()
         //move()
+
+        //Restart Button
+        let RestartButton = UIButton()
+        RestartButton.setTitle("Restart", for: .normal)
+        RestartButton.setTitleColor(UIColor.black, for: .normal)
+        RestartButton.frame = CGRect(origin: CGPoint(x: 0,y :15), size: CGSize(width: 100, height: 30))
+        RestartButton.addTarget(self, action:#selector(restart), for: .touchUpInside)
+        self.view.addSubview(RestartButton)
+        
+        //Left Button
+        let LeftButton = UIButton()
+        LeftButton.setTitle("<", for: .normal)
+        LeftButton.setTitleColor(UIColor.white, for: .normal)
+        LeftButton.frame = CGRect(origin: CGPoint(x: sW*(1/8)-25,y :sH-100), size: CGSize(width: 50, height: 50))
+        LeftButton.transform = CGAffineTransform(scaleX: 3,y: 3);
+        LeftButton.addTarget(self, action:#selector(leftButton), for: .touchUpInside)
+        self.view.addSubview(LeftButton)
+        
+        //Right Button
+        let RightButton = UIButton()
+        RightButton.setTitle(">", for: .normal)
+        RightButton.setTitleColor(UIColor.white, for: .normal)
+        RightButton.frame = CGRect(origin: CGPoint(x: sW*(7/8)-25,y :sH-100), size: CGSize(width: 50, height:50))
+        RightButton.transform = CGAffineTransform(scaleX: 3,y: 3);
+        RightButton.addTarget(self, action:#selector(rightButton), for: .touchUpInside)
+        self.view.addSubview(RightButton)
+        
+        //Forward Button
+        let ForwardButton = UIButton()
+        ForwardButton.setTitle("^", for: .normal)
+        ForwardButton.setTitleColor(UIColor.white, for: .normal)
+        ForwardButton.frame = CGRect(origin: CGPoint(x: sW*(1/2)-25,y :sH-100), size: CGSize(width: 50, height: 50))
+        ForwardButton.transform = CGAffineTransform(scaleX: 4,y: 4);
+        ForwardButton.addTarget(self, action:#selector(forwardButton), for: .touchUpInside)
+        self.view.addSubview(ForwardButton)
     }
     
-    func showHud() {
-        let myHud = hud(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        
-        self.view?.addSubview(myHud)
-    } 
-    func showMenu(){
-        let myHud = menu(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        
-        self.view?.addSubview(myHud)
-        
+    @objc func restart(){
+        print("Restart Pressed")
+    }
+    
+    @objc func leftButton(){
+        print("Left Pressed")
+    }
+    
+    @objc func rightButton(){
+        print("Right Pressed")
+    }
+    
+    @objc func forwardButton(){
+        print("Forward Pressed")
     }
     
     //is not working yet
