@@ -12,10 +12,6 @@
 		03FB7320204469E70080AA59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03FB731F204469E70080AA59 /* Assets.xcassets */; };
 		03FB732E204469E70080AA59 /* MazeGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FB732D204469E70080AA59 /* MazeGameTests.swift */; };
 		03FB7339204469E70080AA59 /* MazeGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FB7338204469E70080AA59 /* MazeGameUITests.swift */; };
-		6576CEFF2075744B0079974E /* hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6576CEFE2075744B0079974E /* hud.swift */; };
-		6576CF01207574C80079974E /* hud.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6576CF00207574C80079974E /* hud.xib */; };
-		6576CF09207584060079974E /* menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6576CF08207584060079974E /* menu.swift */; };
-		6576CF0B207584120079974E /* menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6576CF0A207584120079974E /* menu.xib */; };
 		65B310B2207288E9008B2C4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65B310B1207288E9008B2C4D /* Main.storyboard */; };
 		65B310B420728944008B2C4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65B310B320728944008B2C4D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -49,10 +45,6 @@
 		03FB7334204469E70080AA59 /* MazeGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MazeGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FB7338204469E70080AA59 /* MazeGameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeGameUITests.swift; sourceTree = "<group>"; };
 		03FB733A204469E70080AA59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6576CEFE2075744B0079974E /* hud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hud.swift; sourceTree = "<group>"; };
-		6576CF00207574C80079974E /* hud.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = hud.xib; sourceTree = "<group>"; };
-		6576CF08207584060079974E /* menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menu.swift; sourceTree = "<group>"; };
-		6576CF0A207584120079974E /* menu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = menu.xib; sourceTree = "<group>"; };
 		65B310B1207288E9008B2C4D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		65B310B320728944008B2C4D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,10 +99,6 @@
 			children = (
 				03FB7312204469E70080AA59 /* AppDelegate.swift */,
 				03FB731A204469E70080AA59 /* GameViewController.swift */,
-				6576CEFE2075744B0079974E /* hud.swift */,
-				6576CF08207584060079974E /* menu.swift */,
-				6576CF0A207584120079974E /* menu.xib */,
-				6576CF00207574C80079974E /* hud.xib */,
 				65B310B1207288E9008B2C4D /* Main.storyboard */,
 				03FB731F204469E70080AA59 /* Assets.xcassets */,
 				65B310B320728944008B2C4D /* LaunchScreen.storyboard */,
@@ -244,9 +232,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6576CF0B207584120079974E /* menu.xib in Resources */,
 				65B310B420728944008B2C4D /* LaunchScreen.storyboard in Resources */,
-				6576CF01207574C80079974E /* hud.xib in Resources */,
 				65B310B2207288E9008B2C4D /* Main.storyboard in Resources */,
 				03FB7320204469E70080AA59 /* Assets.xcassets in Resources */,
 			);
@@ -274,8 +260,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				03FB731B204469E70080AA59 /* GameViewController.swift in Sources */,
-				6576CEFF2075744B0079974E /* hud.swift in Sources */,
-				6576CF09207584060079974E /* menu.swift in Sources */,
 				03FB7313204469E70080AA59 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

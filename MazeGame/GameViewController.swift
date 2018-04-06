@@ -13,39 +13,20 @@ import SpriteKit
 
 class GameViewController: UIViewController{
     
-    
     var sceneView: SCNView!
     var camera = SCNNode()
     var cameraOrbit = SCNNode()
     var ground = SCNNode()
     var light = SCNNode()
     var constraint = SCNLookAtConstraint()
-    let sW = UIScreen.main.bounds.width
-    let sH = UIScreen.main.bounds.height
+    let sW = UIScreen.main.bounds.width         //screen width
+    let sH = UIScreen.main.bounds.height        //screen height
     
     //objects to be added to scene
     var lookAtNode = SCNNode()
     var wall: [SCNNode] = []
-    let materialGreen = SCNMaterial()               //set green material
     let materialRed = SCNMaterial()                 //set red material
-    let materialBlue = SCNMaterial()                //set blue material
-    let materialPurple = SCNMaterial()              //set purple material
     let materialCyan = SCNMaterial()                //set cyan material
-    
-    
-    let testMazeB = [10,6,
-                    1,1,1,1,1,1,1,1,1,6,
-                    1,0,1,0,0,0,1,0,1,6,
-                    1,0,1,0,1,0,1,0,1,6,
-                    1,0,0,0,1,0,0,0,1,6,
-                    1,1,1,1,1,1,1,1,1,9,]
-    
-    /*let testMaze = [[1,1,1,1,1,1,1,1,1,1],
-                    [1,0,0,0,0,0,0,0,0,1],
-                    [1,0,0,0,0,0,0,0,0,1],
-                    [1,0,0,0,0,0,0,0,0,1],
-                    [1,0,0,0,0,0,0,0,0,1],
-                    [1,1,1,1,1,1,1,1,1,1]]*/
     
     var testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                     [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
@@ -235,10 +216,7 @@ class GameViewController: UIViewController{
     
     func initMaterial() {
         //loading materials with correct color
-        materialGreen.diffuse.contents = UIColor.green
         materialRed.diffuse.contents = UIColor.red
-        materialBlue.diffuse.contents = UIColor.blue
-        materialPurple.diffuse.contents = UIColor.purple
         materialCyan.diffuse.contents = UIColor.cyan
     }
     
@@ -364,7 +342,6 @@ class GameViewController: UIViewController{
                 }
             }
             
-            
             if neighbors.count > 0 {
                 let randNeighbor = Int(arc4random_uniform(UInt32(neighbors.count-1)))
                 
@@ -385,7 +362,6 @@ class GameViewController: UIViewController{
                     }
                 }
             }
-            
             
             if abs(currentPos-newPos) == 1 {
                 var col = currentPos % 8
@@ -428,23 +404,16 @@ class GameViewController: UIViewController{
         var i = 0
         var xcont = 0
         
-        print(testMaze.count)
-        
         while(i < testMaze.count){
-            
             for item in testMaze[i]{
                 switch (item){
                 case 0:
-                    //print("blank")
                     xpos=xpos+5
-                    
                 case 1:
                     wall.append(SCNNode(geometry: wallGeometry))
                     wall[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
-                    //print("X-axis wall: x: ", xpos, " y: ", ypos, " z: ", zpos)
                     xcont = xcont + 1;
                     xpos = xpos + 5;
-                    
                 default:
                     print("this shouldn't happen")
                 }
