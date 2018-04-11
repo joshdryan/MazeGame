@@ -19,6 +19,7 @@ class GameViewController: UIViewController{
     var ground = SCNNode()
     var light = SCNNode()
     var constraint = SCNLookAtConstraint()
+    
     let sW = UIScreen.main.bounds.width         //screen width
     let sH = UIScreen.main.bounds.height        //screen height
     
@@ -118,33 +119,84 @@ class GameViewController: UIViewController{
     
     @objc func restart(){
         print("Restart Pressed")
+        lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
+        self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
     }
     
     @objc func leftButton(){
         print("Left Pressed")
+        if(lookAtNode.position.z > camera.position.z) {
+            self.camera.position = SCNVector3(x: camera.position.x - 15, y: 30, z: camera.position.z + 25)
+            Xplus()
+        } else if(lookAtNode.position.x > camera.position.x) {
+            self.camera.position = SCNVector3(x: camera.position.x + 20, y: 30, z: camera.position.z + 15)
+            Zminus()
+        } else if(lookAtNode.position.z < camera.position.z) {
+            self.camera.position = SCNVector3(x: camera.position.x + 15, y: 30, z: camera.position.z - 20)
+            Xminus()
+        } else if(lookAtNode.position.x < camera.position.x) {
+            self.camera.position = SCNVector3(x: camera.position.x - 20, y: 30, z: camera.position.z - 20)
+            Zplus()
+        }
     }
     
     @objc func rightButton(){
         print("Right Pressed")
+        if(lookAtNode.position.z > camera.position.z) {
+            self.camera.position = SCNVector3(x: camera.position.x + 15, y: 30, z: camera.position.z + 25)
+            Xminus()
+        } else if(lookAtNode.position.x > camera.position.x) {
+            self.camera.position = SCNVector3(x: camera.position.x + 20, y: 30, z: camera.position.z - 20)
+            Zplus()
+        } else if(lookAtNode.position.z < camera.position.z) {
+            self.camera.position = SCNVector3(x: camera.position.x - 15, y: 30, z: camera.position.z - 20)
+            Xplus()
+        } else if(lookAtNode.position.x < camera.position.x) {
+            self.camera.position = SCNVector3(x: camera.position.x - 20, y: 30, z: camera.position.z + 15)
+            Zminus()
+        }
     }
     
     @objc func forwardButton(){
         print("Forward Pressed")
+        if(lookAtNode.position.z > camera.position.z) {
+            self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z + 5)
+            Zplus()
+        } else if(lookAtNode.position.x > camera.position.x) {
+            self.camera.position = SCNVector3(x: camera.position.x + 5, y: 30, z: camera.position.z)
+            Xplus()
+        } else if(lookAtNode.position.z < camera.position.z) {
+            self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z - 5)
+            Zminus()
+        } else if(lookAtNode.position.x < camera.position.x) {
+            self.camera.position = SCNVector3(x: camera.position.x - 5, y: 30, z: camera.position.z)
+            Xminus()
+        }
     }
     
-    //is not working yet
-    @IBAction func tapToMove(_ sender: UITapGestureRecognizer) {
-        move()
+    func Xplus() {
+        //self.camera.position = SCNVector3(x: camera.position.x + 5, y: 30, z: camera.position.z)
+        lookAtNode.position = SCNVector3(x: lookAtNode.position.x + 5, y: 0, z: lookAtNode.position.z)
+        print("Xplus: ")
+        print(camera.position)
     }
-    
-    func move() {
-        print("moving")
-        //lookAtNode.position = SCNVector3(x: 100, y: 0, z: 100)
-        //constraint = SCNLookAtConstraint(target: lookAtNode)
-        self.camera.position = SCNVector3(x: (self.camera.position.x + 5), y: 2.5, z: (self.camera.position.x + 5))
-        //print(SCNVector3(x: (self.camera.position.x + 5), y: 2.5, z: (self.camera.position.x + 5)))
-        
-        //lookAtNode.position = SCNVector3(x: lookAtNode.position.x + 5, y: 2.5, z: 0)
+    func Zplus() {
+        //self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z + 5)
+        lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z + 5)
+        print("Zplus: ")
+        print(camera.position)
+    }
+    func Xminus() {
+        //self.camera.position = SCNVector3(x: camera.position.x - 5, y: 30, z: camera.position.z)
+        lookAtNode.position = SCNVector3(x: lookAtNode.position.x - 5, y: 0, z: lookAtNode.position.z)
+        print("Xminus: ")
+        print(camera.position)
+    }
+    func Zminus() {
+        //self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z - 5)
+        lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z - 5)
+        print("Zminus: ")
+        print(camera.position)
     }
     
     func initView() {
@@ -164,36 +216,19 @@ class GameViewController: UIViewController{
         let lookAtX = (Float(testMaze[0].count / 2)) * 5
         let lookAtZ = (Float(testMaze.count / 2)) * 5
         
-        lookAtNode.position = SCNVector3(x: 23.5, y: 0, z: 5)
+        lookAtNode.position = SCNVector3(x: 20, y: 0, z: 5)
         
         let camera = SCNCamera()
 
-        camera.zFar = 10000
+        camera.zFar = 1000
         self.camera = SCNNode()
         self.camera.camera = camera
         constraint = SCNLookAtConstraint(target: lookAtNode)
         constraint.isGimbalLockEnabled = true
        
         self.camera.constraints = [constraint]
-        
-        //print(self.camera.pivot)
-        //self.camera.pivot = SCNMatrix4MakeTranslation(lookAtX, 0.0,lookAtZ)
-        //print(self.camera.worldTransform)
-        //self.camera.position = SCNVector3(x: 7.5, y: 5, z: 7.5)
         self.camera.position = SCNVector3(x: 0, y: 40, z: 0)
-        //self.camera.position = SCNVector3(x: lookAtX, y: 10, z: lookAtZ) //temp
-//        cameraOrbit = SCNNode()
         cameraOrbit.addChildNode(self.camera)
-//        lookAtNode.addChildNode(cameraOrbit)
-        
-        //self.camera.transform();
-        
-//        pitch
-//        cameraOrbit.eulerAngles.x = Float(0)
-//        yaw
-//        cameraOrbit.eulerAngles.y = Float(M_PI_4*3)
-//        roll
-//        cameraOrbit.eulerAngles.y = Float(1000)
         
         let ambientLight = SCNLight()
         ambientLight.color = UIColor.darkGray
@@ -210,7 +245,7 @@ class GameViewController: UIViewController{
         light = SCNNode()
         light.light = spotLight
         light.position = SCNVector3(x: -25, y: 15, z: -25)
-//        light.position = SCNVector3(x: lookAtX, y: 100, z: lookAtZ)
+        //light.position = SCNVector3(x: lookAtX, y: 100, z: lookAtZ)
         light.constraints = [constraint]
     }
     
