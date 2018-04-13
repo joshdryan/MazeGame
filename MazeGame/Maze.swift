@@ -208,6 +208,18 @@ class Maze {
         print("Generated Maze")
     }
     
+    func unloadMaze(){
+        print(wall.count)
+        let cont = wall.count
+        var i = 0
+        while(i<cont){
+            wall[i].removeFromParentNode()
+            i=i+1;
+        }
+        wall.removeAll()
+        print(wall.count)
+    }
+    
     func loadMaze() {
         print("loading Maze")
         let wallGeometry = SCNBox(width: 5, height: 8, length: 5, chamferRadius: 0)

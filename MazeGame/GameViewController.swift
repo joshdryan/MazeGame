@@ -35,6 +35,7 @@ class GameViewController: UIViewController{
     
     var maze: Maze!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -52,8 +53,6 @@ class GameViewController: UIViewController{
         maze.generateMaze()
         maze.loadMaze()
         sceneView.scene?.rootNode.addChildNode(maze.x)
-//        generateMaze()
-//        loadMaze()
         
         //Left Button
         LeftButton.setTitle("<", for: .normal)
@@ -86,14 +85,14 @@ class GameViewController: UIViewController{
         //Pause Menu Reset Button
         PauseReset.setTitle("Reset", for: .normal)
         PauseReset.setTitleColor(UIColor.black, for: .normal)
-        PauseReset.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(1/8)), size: CGSize(width: 145, height: 50))
+        PauseReset.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(3/8)), size: CGSize(width: 145, height: 50))
         PauseReset.transform = CGAffineTransform(scaleX: 3,y: 3);
         PauseReset.addTarget(self, action:#selector(pauseResetMenu), for: .touchUpInside)
         
         //Pause Menu Restart Button
         PauseRestart.setTitle("Restart", for: .normal)
         PauseRestart.setTitleColor(UIColor.black, for: .normal)
-        PauseRestart.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(3/8)), size: CGSize(width: 145, height: 50))
+        PauseRestart.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(1/8)), size: CGSize(width: 145, height: 50))
         PauseRestart.transform = CGAffineTransform(scaleX: 3,y: 3);
         PauseRestart.addTarget(self, action:#selector(pauseRestartMenu), for: .touchUpInside)
         
@@ -128,7 +127,8 @@ class GameViewController: UIViewController{
         //Restart Message
         RestartMessage.numberOfLines = 4
         RestartMessage.text = "Are you sure you want to restart? \n(Restart current maze)"
-        RestartMessage.frame = CGRect(origin: CGPoint(x: sW*(0.5)-50,y :sH*(1/8)), size: CGSize(width: 145, height: 100))
+        RestartMessage.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(1/8)), size: CGSize(width: 145, height: 100))
+        RestartMessage.textAlignment = .center
         RestartMessage.transform = CGAffineTransform(scaleX: 2,y: 2);
         
         //Confrim Reset
@@ -148,7 +148,8 @@ class GameViewController: UIViewController{
         //Restart Message
         ResetMessage.numberOfLines = 4
         ResetMessage.text = "Are you sure you want to reset? \n(Creates new maze)"
-        ResetMessage.frame = CGRect(origin: CGPoint(x: sW*(0.5)-50,y :sH*(1/8)), size: CGSize(width: 145, height: 100))
+        ResetMessage.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(1/8)), size: CGSize(width: 145, height: 100))
+        ResetMessage.textAlignment = .center
         ResetMessage.transform = CGAffineTransform(scaleX: 2,y: 2);
         
         //Game title
@@ -283,9 +284,11 @@ class GameViewController: UIViewController{
     @objc func reset(){
         lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
-//        unloadMaze()
-//        maze.generateMaze()
-//        maze.loadMaze()
+        //******Doesnt work right now
+        //maze.unloadMaze()
+        //maze.generateMaze()
+        //maze.loadMaze()
+        //******
         self.view.addSubview(LeftButton)
         self.view.addSubview(RightButton)
         self.view.addSubview(ForwardButton)
@@ -323,9 +326,11 @@ class GameViewController: UIViewController{
     @objc func start(){
         lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
-        unloadMaze()
-        generateMaze()
-        loadMaze()
+        //******Doesnt work right now
+        //maze.unloadMaze()
+        //maze.generateMaze()
+        //maze.loadMaze()
+        //******
         Start.removeFromSuperview()
         About.removeFromSuperview()
         Title.removeFromSuperview()
@@ -417,7 +422,7 @@ class GameViewController: UIViewController{
         constraint.isGimbalLockEnabled = true
        
         self.camera.constraints = [constraint]
-        self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
+        self.camera.position = SCNVector3(x: -300, y: 150, z: -300)
         cameraOrbit.addChildNode(self.camera)
         
         let ambientLight = SCNLight()
