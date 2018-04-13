@@ -196,11 +196,11 @@ class GameViewController: UIViewController{
         if(lookAtNode.position.z > camera.position.z) {
             self.camera.position = SCNVector3(x: lookAtNode.position.x - 20, y: 30, z: lookAtNode.position.z)
         } else if(lookAtNode.position.x > camera.position.x) {
-            self.camera.position = SCNVector3(x: lookAtNode.position.x, y: 30, z: lookAtNode.position.z - 20)
-        } else if(lookAtNode.position.z < camera.position.z) {
             self.camera.position = SCNVector3(x: lookAtNode.position.x, y: 30, z: lookAtNode.position.z + 20)
-        } else if(lookAtNode.position.x < camera.position.x) {
+        } else if(lookAtNode.position.z < camera.position.z) {
             self.camera.position = SCNVector3(x: lookAtNode.position.x + 20, y: 30, z: lookAtNode.position.z)
+        } else if(lookAtNode.position.x < camera.position.x) {
+            self.camera.position = SCNVector3(x: lookAtNode.position.x, y: 30, z: lookAtNode.position.z - 20)
         }
     }
     
