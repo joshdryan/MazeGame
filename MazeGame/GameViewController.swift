@@ -29,42 +29,53 @@ class GameViewController: UIViewController{
     let materialRed = SCNMaterial()                 //set red material
     let materialCyan = SCNMaterial()                //set cyan material
     
-    var testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                    [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
-                    [1,0,1,1,1,1,1,1,0,1,0,1,0,1,0,1],
-                    [1,0,1,0,0,0,1,0,0,1,0,0,0,1,0,1],
-                    [1,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1],
-                    [1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1],
-                    [1,1,1,1,1,0,1,1,1,1,1,1,0,1,0,1],
-                    [0,0,1,0,0,0,0,0,0,0,1,0,0,1,0,1],
-                    [1,0,1,1,1,1,1,1,1,0,1,0,0,0,0,1],
-                    [1,0,1,0,0,0,0,0,1,0,1,0,1,1,0,1],
-                    [1,0,1,0,1,1,1,0,1,0,1,0,1,1,0,1],
-                    [1,0,0,0,1,0,1,0,1,1,1,0,1,1,0,1],
-                    [1,1,1,1,1,0,1,0,1,1,1,0,1,1,0,1],
-                    [1,0,0,0,0,0,1,0,0,0,1,0,0,1,0,1],
-                    [1,0,1,1,1,1,1,1,1,0,1,1,0,1,0,1],
-                    [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
-                    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+//
+//    var testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+//                    [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
+//                    [1,0,1,1,1,1,1,1,0,1,0,1,0,1,0,1],
+//                    [1,0,1,0,0,0,1,0,0,1,0,0,0,1,0,1],
+//                    [1,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1],
+//                    [1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1],
+//                    [1,1,1,1,1,0,1,1,1,1,1,1,0,1,0,1],
+//                    [0,0,1,0,0,0,0,0,0,0,1,0,0,1,0,1],
+//                    [1,0,1,1,1,1,1,1,1,0,1,0,0,0,0,1],
+//                    [1,0,1,0,0,0,0,0,1,0,1,0,1,1,0,1],
+//                    [1,0,1,0,1,1,1,0,1,0,1,0,1,1,0,1],
+//                    [1,0,0,0,1,0,1,0,1,1,1,0,1,1,0,1],
+//                    [1,1,1,1,1,0,1,0,1,1,1,0,1,1,0,1],
+//                    [1,0,0,0,0,0,1,0,0,0,1,0,0,1,0,1],
+//                    [1,0,1,1,1,1,1,1,1,0,1,1,0,1,0,1],
+//                    [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
+//                    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
     
     //         8x8 array with walls
-//    var testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-//                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+    var testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+    
+    //        8x8 array
+    var gridTemplate = [0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0]
     
     var gameView: SCNView!
     var gameScene: SCNScene!
@@ -78,7 +89,7 @@ class GameViewController: UIViewController{
         initMaterial()
         initElements()
         //generateMaze()
-        loadMaze()
+        //loadMaze()
         
         //Left Button
         LeftButton.setTitle("<", for: .normal)
@@ -144,7 +155,6 @@ class GameViewController: UIViewController{
     
     
     @objc func restart(){
-        print("Restarting")
         lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
         unloadMaze()
@@ -160,7 +170,6 @@ class GameViewController: UIViewController{
     }
     
     @objc func goBack(){
-        print("No Restart")
         self.camera.position = SCNVector3(x: xpos, y: 30, z: zpos)
         self.view.addSubview(LeftButton)
         self.view.addSubview(RightButton)
@@ -171,7 +180,6 @@ class GameViewController: UIViewController{
         RestartMessage.removeFromSuperview()
     }
     @objc func restartMenu(){
-        print("Restart Menu")
         xpos = camera.position.x
         zpos = camera.position.z
         self.camera.position = SCNVector3(x: -300, y: 150, z: -300)
@@ -185,7 +193,6 @@ class GameViewController: UIViewController{
     }
     
     @objc func leftButton(){
-        print("Left Pressed")
         if(lookAtNode.position.z > camera.position.z) {
             self.camera.position = SCNVector3(x: camera.position.x - 15, y: 30, z: camera.position.z + 25)
             Xplus()
@@ -202,7 +209,6 @@ class GameViewController: UIViewController{
     }
     
     @objc func rightButton(){
-        print("Right Pressed")
         if(lookAtNode.position.z > camera.position.z) {
             self.camera.position = SCNVector3(x: camera.position.x + 15, y: 30, z: camera.position.z + 25)
             Xminus()
@@ -219,7 +225,6 @@ class GameViewController: UIViewController{
     }
     
     @objc func forwardButton(){
-        print("Forward Pressed")
         if(lookAtNode.position.z > camera.position.z) {
             self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z + 5)
             Zplus()
@@ -238,26 +243,18 @@ class GameViewController: UIViewController{
     func Xplus() {
         //self.camera.position = SCNVector3(x: camera.position.x + 5, y: 30, z: camera.position.z)
         lookAtNode.position = SCNVector3(x: lookAtNode.position.x + 5, y: 0, z: lookAtNode.position.z)
-        //print("Xplus: ")
-        //print(camera.position)
     }
     func Zplus() {
         //self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z + 5)
         lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z + 5)
-        //print("Zplus: ")
-        //print(camera.position)
     }
     func Xminus() {
         //self.camera.position = SCNVector3(x: camera.position.x - 5, y: 30, z: camera.position.z)
         lookAtNode.position = SCNVector3(x: lookAtNode.position.x - 5, y: 0, z: lookAtNode.position.z)
-        //print("Xminus: ")
-        //print(camera.position)
     }
     func Zminus() {
         //self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z - 5)
         lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z - 5)
-        //print("Zminus: ")
-        //print(camera.position)
     }
     
     func initView() {
@@ -350,14 +347,7 @@ class GameViewController: UIViewController{
         
         
         //        8x8 array
-        var Array1 = [0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0]
+        var Array1 = gridTemplate
         
         let mazeSize = Array1.count - 1
         
