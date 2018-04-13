@@ -77,20 +77,10 @@ class GameViewController: UIViewController{
         initView()
         initMaterial()
         initElements()
-//      generateMaze()
+        //generateMaze()
         loadMaze()
-        //move()
-
-        //Restart Button
-        let RestartButton = UIButton()
-        RestartButton.setTitle("Restart", for: .normal)
-        RestartButton.setTitleColor(UIColor.black, for: .normal)
-        RestartButton.frame = CGRect(origin: CGPoint(x: 0,y :15), size: CGSize(width: 100, height: 30))
-        RestartButton.addTarget(self, action:#selector(restart), for: .touchUpInside)
-        self.view.addSubview(RestartButton)
         
         //Left Button
-        let LeftButton = UIButton()
         LeftButton.setTitle("<", for: .normal)
         LeftButton.setTitleColor(UIColor.white, for: .normal)
         LeftButton.frame = CGRect(origin: CGPoint(x: sW*(1/8)-25,y :sH-100), size: CGSize(width: 50, height: 50))
@@ -99,7 +89,6 @@ class GameViewController: UIViewController{
         self.view.addSubview(LeftButton)
         
         //Right Button
-        let RightButton = UIButton()
         RightButton.setTitle(">", for: .normal)
         RightButton.setTitleColor(UIColor.white, for: .normal)
         RightButton.frame = CGRect(origin: CGPoint(x: sW*(7/8)-25,y :sH-100), size: CGSize(width: 50, height:50))
@@ -108,19 +97,91 @@ class GameViewController: UIViewController{
         self.view.addSubview(RightButton)
         
         //Forward Button
-        let ForwardButton = UIButton()
         ForwardButton.setTitle("^", for: .normal)
         ForwardButton.setTitleColor(UIColor.white, for: .normal)
         ForwardButton.frame = CGRect(origin: CGPoint(x: sW*(1/2)-25,y :sH-100), size: CGSize(width: 50, height: 50))
         ForwardButton.transform = CGAffineTransform(scaleX: 4,y: 4);
         ForwardButton.addTarget(self, action:#selector(forwardButton), for: .touchUpInside)
         self.view.addSubview(ForwardButton)
+        
+        //Restart Menu
+        RestartButton.setTitle("Restart", for: .normal)
+        RestartButton.setTitleColor(UIColor.black, for: .normal)
+        RestartButton.frame = CGRect(origin: CGPoint(x: 0,y :15), size: CGSize(width: 100, height: 30))
+        RestartButton.addTarget(self, action:#selector(restartMenu), for: .touchUpInside)
+        self.view.addSubview(RestartButton)
+        
+        //Confrim Restart
+        ConfirmButton.setTitle("Yes", for: .normal)
+        ConfirmButton.setTitleColor(UIColor.white, for: .normal)
+        ConfirmButton.frame = CGRect(origin: CGPoint(x: sW*(2/8)-25,y :sH-200), size: CGSize(width: 50, height: 50))
+        ConfirmButton.transform = CGAffineTransform(scaleX: 4,y: 4);
+        ConfirmButton.addTarget(self, action:#selector(restart), for: .touchUpInside)
+        
+        //Deny Restart
+        DenyButton.setTitle("No", for: .normal)
+        DenyButton.setTitleColor(UIColor.white, for: .normal)
+        DenyButton.frame = CGRect(origin: CGPoint(x: sW*(6/8)-25,y :sH-200), size: CGSize(width: 50, height: 50))
+        DenyButton.transform = CGAffineTransform(scaleX: 4,y: 4);
+        DenyButton.addTarget(self, action:#selector(goBack), for: .touchUpInside)
+        
+        //Restart Message
+        RestartMessage.numberOfLines = 3
+        RestartMessage.text = "Are you sure you want to restart?"
+        RestartMessage.frame = CGRect(origin: CGPoint(x: sW*(0.5)-50,y :sH*(1/8)), size: CGSize(width: 145, height: 50))
+        RestartMessage.transform = CGAffineTransform(scaleX: 3,y: 3);
+        
     }
+    let LeftButton = UIButton()
+    let RightButton = UIButton()
+    let ForwardButton = UIButton()
+    let RestartButton = UIButton()
+    let ConfirmButton = UIButton()
+    let DenyButton = UIButton()
+    let RestartMessage = UILabel()
+    var xpos:Float = 0.0
+    var zpos:Float = 0.0
+    
     
     @objc func restart(){
-        print("Restart Pressed")
+        print("Restarting")
         lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
+        unloadMaze()
+        generateMaze()
+        loadMaze()
+        self.view.addSubview(LeftButton)
+        self.view.addSubview(RightButton)
+        self.view.addSubview(ForwardButton)
+        self.view.addSubview(RestartButton)
+        ConfirmButton.removeFromSuperview()
+        DenyButton.removeFromSuperview()
+        RestartMessage.removeFromSuperview()
+    }
+    
+    @objc func goBack(){
+        print("No Restart")
+        self.camera.position = SCNVector3(x: xpos, y: 30, z: zpos)
+        self.view.addSubview(LeftButton)
+        self.view.addSubview(RightButton)
+        self.view.addSubview(ForwardButton)
+        self.view.addSubview(RestartButton)
+        ConfirmButton.removeFromSuperview()
+        DenyButton.removeFromSuperview()
+        RestartMessage.removeFromSuperview()
+    }
+    @objc func restartMenu(){
+        print("Restart Menu")
+        xpos = camera.position.x
+        zpos = camera.position.z
+        self.camera.position = SCNVector3(x: -300, y: 150, z: -300)
+        LeftButton.removeFromSuperview()
+        RightButton.removeFromSuperview()
+        ForwardButton.removeFromSuperview()
+        RestartButton.removeFromSuperview()
+        self.view.addSubview(ConfirmButton)
+        self.view.addSubview(DenyButton)
+        self.view.addSubview(RestartMessage)
     }
     
     @objc func leftButton(){
@@ -177,26 +238,26 @@ class GameViewController: UIViewController{
     func Xplus() {
         //self.camera.position = SCNVector3(x: camera.position.x + 5, y: 30, z: camera.position.z)
         lookAtNode.position = SCNVector3(x: lookAtNode.position.x + 5, y: 0, z: lookAtNode.position.z)
-        print("Xplus: ")
-        print(camera.position)
+        //print("Xplus: ")
+        //print(camera.position)
     }
     func Zplus() {
         //self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z + 5)
         lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z + 5)
-        print("Zplus: ")
-        print(camera.position)
+        //print("Zplus: ")
+        //print(camera.position)
     }
     func Xminus() {
         //self.camera.position = SCNVector3(x: camera.position.x - 5, y: 30, z: camera.position.z)
         lookAtNode.position = SCNVector3(x: lookAtNode.position.x - 5, y: 0, z: lookAtNode.position.z)
-        print("Xminus: ")
-        print(camera.position)
+        //print("Xminus: ")
+        //print(camera.position)
     }
     func Zminus() {
         //self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z - 5)
         lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z - 5)
-        print("Zminus: ")
-        print(camera.position)
+        //print("Zminus: ")
+        //print(camera.position)
     }
     
     func initView() {
@@ -216,7 +277,7 @@ class GameViewController: UIViewController{
         let lookAtX = (Float(testMaze[0].count / 2)) * 5
         let lookAtZ = (Float(testMaze.count / 2)) * 5
         
-        lookAtNode.position = SCNVector3(x: 20, y: 0, z: 5)
+        lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         
         let camera = SCNCamera()
 
@@ -227,7 +288,7 @@ class GameViewController: UIViewController{
         constraint.isGimbalLockEnabled = true
        
         self.camera.constraints = [constraint]
-        self.camera.position = SCNVector3(x: 0, y: 40, z: 0)
+        self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
         cameraOrbit.addChildNode(self.camera)
         
         let ambientLight = SCNLight()
@@ -265,7 +326,7 @@ class GameViewController: UIViewController{
     }
     
     func generateMaze() {
-        
+        print("Generating Maze")
 //        https://en.wikipedia.org/wiki/Maze_generation_algorithm
         
         ////         8x8 array with walls
@@ -305,13 +366,13 @@ class GameViewController: UIViewController{
         
         //        random starting position, change int to UInt32 for compatibility
         let startingPos = Int(arc4random_uniform(UInt32(mazeSize)))
-        print(startingPos)
+        //print(startingPos)
         
         currentPos = startingPos
         
         Array1[startingPos] = 1
         
-        print(Array1)
+        //print(Array1)
         while Array1.contains(0) {
             var neighbors = [Int]()
             var neighborPos = 0
@@ -427,9 +488,23 @@ class GameViewController: UIViewController{
             }
             currentPos = newPos
         }
+        print("Generated Maze")
+    }
+    
+    func unloadMaze(){
+        print(wall.count)
+        let cont = wall.count
+        var i = 0
+        while(i<cont){
+            wall[i].removeFromParentNode()
+            i=i+1;
+        }
+        wall.removeAll()
+        print(wall.count)
     }
     
     func loadMaze() {
+        print("loading Maze")
         let wallGeometry = SCNBox(width: 5, height: 8, length: 5, chamferRadius: 0)
         wallGeometry.materials = [materialRed]
         
@@ -461,7 +536,7 @@ class GameViewController: UIViewController{
         print("finished maze")
         
         for child in wall {
-            print(child.position)
+            //print(child.position)
             sceneView.scene?.rootNode.addChildNode(child)
         }
         
