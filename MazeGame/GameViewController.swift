@@ -88,8 +88,8 @@ class GameViewController: UIViewController{
         initView()
         initMaterial()
         initElements()
-        //generateMaze()
-        //loadMaze()
+        generateMaze()
+        loadMaze()
         
         //Left Button
         LeftButton.setTitle("<", for: .normal)
@@ -194,49 +194,49 @@ class GameViewController: UIViewController{
     
     @objc func leftButton(){
         if(lookAtNode.position.z > camera.position.z) {
-            self.camera.position = SCNVector3(x: camera.position.x - 15, y: 30, z: camera.position.z + 25)
-            Xplus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x - 20, y: 30, z: lookAtNode.position.z)
+            //Xplus()
         } else if(lookAtNode.position.x > camera.position.x) {
-            self.camera.position = SCNVector3(x: camera.position.x + 20, y: 30, z: camera.position.z + 15)
-            Zminus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x, y: 30, z: lookAtNode.position.z - 20)
+            //Zminus()
         } else if(lookAtNode.position.z < camera.position.z) {
-            self.camera.position = SCNVector3(x: camera.position.x + 15, y: 30, z: camera.position.z - 20)
-            Xminus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x, y: 30, z: lookAtNode.position.z + 20)
+            //Xminus()
         } else if(lookAtNode.position.x < camera.position.x) {
-            self.camera.position = SCNVector3(x: camera.position.x - 20, y: 30, z: camera.position.z - 20)
-            Zplus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x + 20, y: 30, z: lookAtNode.position.z)
+            //Zplus()
         }
     }
     
     @objc func rightButton(){
         if(lookAtNode.position.z > camera.position.z) {
-            self.camera.position = SCNVector3(x: camera.position.x + 15, y: 30, z: camera.position.z + 25)
-            Xminus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x + 20, y: 30, z: lookAtNode.position.z)
+            //Xminus()
         } else if(lookAtNode.position.x > camera.position.x) {
-            self.camera.position = SCNVector3(x: camera.position.x + 20, y: 30, z: camera.position.z - 20)
-            Zplus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x, y: 30, z: lookAtNode.position.z - 20)
+            //Zplus()
         } else if(lookAtNode.position.z < camera.position.z) {
-            self.camera.position = SCNVector3(x: camera.position.x - 15, y: 30, z: camera.position.z - 20)
-            Xplus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x - 20, y: 30, z: lookAtNode.position.z)
+            //Xplus()
         } else if(lookAtNode.position.x < camera.position.x) {
-            self.camera.position = SCNVector3(x: camera.position.x - 20, y: 30, z: camera.position.z + 15)
-            Zminus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x, y: 30, z: lookAtNode.position.z + 20)
+            //Zminus()
         }
     }
     
     @objc func forwardButton(){
         if(lookAtNode.position.z > camera.position.z) {
             self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z + 5)
-            Zplus()
+            lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z + 5)
         } else if(lookAtNode.position.x > camera.position.x) {
             self.camera.position = SCNVector3(x: camera.position.x + 5, y: 30, z: camera.position.z)
-            Xplus()
+            lookAtNode.position = SCNVector3(x: lookAtNode.position.x + 5, y: 0, z: lookAtNode.position.z)
         } else if(lookAtNode.position.z < camera.position.z) {
             self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z - 5)
-            Zminus()
+            lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z - 5)
         } else if(lookAtNode.position.x < camera.position.x) {
             self.camera.position = SCNVector3(x: camera.position.x - 5, y: 30, z: camera.position.z)
-            Xminus()
+            lookAtNode.position = SCNVector3(x: lookAtNode.position.x - 5, y: 0, z: lookAtNode.position.z)
         }
     }
     
