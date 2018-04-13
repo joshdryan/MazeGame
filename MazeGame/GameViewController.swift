@@ -78,7 +78,7 @@ class GameViewController: UIViewController{
         
         //Pause Menu
         PauseMenu.setTitle("Menu", for: .normal)
-        PauseMenu.setTitleColor(UIColor.black, for: .normal)
+        PauseMenu.setTitleColor(UIColor.white, for: .normal)
         PauseMenu.frame = CGRect(origin: CGPoint(x: 0,y :15), size: CGSize(width: 100, height: 30))
         PauseMenu.addTarget(self, action:#selector(pauseMenu), for: .touchUpInside)
         
