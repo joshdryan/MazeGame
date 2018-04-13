@@ -97,7 +97,6 @@ class GameViewController: UIViewController{
         LeftButton.frame = CGRect(origin: CGPoint(x: sW*(1/8)-25,y :sH-100), size: CGSize(width: 50, height: 50))
         LeftButton.transform = CGAffineTransform(scaleX: 3,y: 3);
         LeftButton.addTarget(self, action:#selector(leftButton), for: .touchUpInside)
-        self.view.addSubview(LeftButton)
         
         //Right Button
         RightButton.setTitle(">", for: .normal)
@@ -105,7 +104,6 @@ class GameViewController: UIViewController{
         RightButton.frame = CGRect(origin: CGPoint(x: sW*(7/8)-25,y :sH-100), size: CGSize(width: 50, height:50))
         RightButton.transform = CGAffineTransform(scaleX: 3,y: 3);
         RightButton.addTarget(self, action:#selector(rightButton), for: .touchUpInside)
-        self.view.addSubview(RightButton)
         
         //Forward Button
         ForwardButton.setTitle("^", for: .normal)
@@ -113,48 +111,211 @@ class GameViewController: UIViewController{
         ForwardButton.frame = CGRect(origin: CGPoint(x: sW*(1/2)-25,y :sH-100), size: CGSize(width: 50, height: 50))
         ForwardButton.transform = CGAffineTransform(scaleX: 4,y: 4);
         ForwardButton.addTarget(self, action:#selector(forwardButton), for: .touchUpInside)
-        self.view.addSubview(ForwardButton)
         
-        //Restart Menu
-        RestartButton.setTitle("Restart", for: .normal)
-        RestartButton.setTitleColor(UIColor.black, for: .normal)
-        RestartButton.frame = CGRect(origin: CGPoint(x: 0,y :15), size: CGSize(width: 100, height: 30))
-        RestartButton.addTarget(self, action:#selector(restartMenu), for: .touchUpInside)
-        self.view.addSubview(RestartButton)
+        
+        //Pause Menu
+        PauseMenu.setTitle("Menu", for: .normal)
+        PauseMenu.setTitleColor(UIColor.black, for: .normal)
+        PauseMenu.frame = CGRect(origin: CGPoint(x: 0,y :15), size: CGSize(width: 100, height: 30))
+        PauseMenu.addTarget(self, action:#selector(pauseMenu), for: .touchUpInside)
+        
+        //Pause Menu Reset Button
+        PauseReset.setTitle("Reset", for: .normal)
+        PauseReset.setTitleColor(UIColor.black, for: .normal)
+        PauseReset.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(1/8)), size: CGSize(width: 145, height: 50))
+        PauseReset.transform = CGAffineTransform(scaleX: 3,y: 3);
+        PauseReset.addTarget(self, action:#selector(pauseResetMenu), for: .touchUpInside)
+        
+        //Pause Menu Restart Button
+        PauseRestart.setTitle("Restart", for: .normal)
+        PauseRestart.setTitleColor(UIColor.black, for: .normal)
+        PauseRestart.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(3/8)), size: CGSize(width: 145, height: 50))
+        PauseRestart.transform = CGAffineTransform(scaleX: 3,y: 3);
+        PauseRestart.addTarget(self, action:#selector(pauseRestartMenu), for: .touchUpInside)
+        
+        //Pause Menu to Main Menu Button
+        PauseMainMenu.setTitle("Main Menu", for: .normal)
+        PauseMainMenu.setTitleColor(UIColor.black, for: .normal)
+        PauseMainMenu.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(5/8)), size: CGSize(width: 145, height: 50))
+        PauseMainMenu.transform = CGAffineTransform(scaleX: 3,y: 3);
+        PauseMainMenu.addTarget(self, action:#selector(pauseMainMenu), for: .touchUpInside)
+        
+        //Pause Menu back to Maze
+        BackToMaze.setTitle("Back", for: .normal)
+        BackToMaze.setTitleColor(UIColor.black, for: .normal)
+        BackToMaze.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(7/8)), size: CGSize(width: 145, height: 50))
+        BackToMaze.transform = CGAffineTransform(scaleX: 3,y: 3);
+        BackToMaze.addTarget(self, action:#selector(backToMaze), for: .touchUpInside)
         
         //Confrim Restart
-        ConfirmButton.setTitle("Yes", for: .normal)
-        ConfirmButton.setTitleColor(UIColor.white, for: .normal)
-        ConfirmButton.frame = CGRect(origin: CGPoint(x: sW*(2/8)-25,y :sH-200), size: CGSize(width: 50, height: 50))
-        ConfirmButton.transform = CGAffineTransform(scaleX: 4,y: 4);
-        ConfirmButton.addTarget(self, action:#selector(restart), for: .touchUpInside)
+        ConfirmRestartButton.setTitle("Yes", for: .normal)
+        ConfirmRestartButton.setTitleColor(UIColor.white, for: .normal)
+        ConfirmRestartButton.frame = CGRect(origin: CGPoint(x: sW*(2/8)-25,y :sH-200), size: CGSize(width: 50, height: 50))
+        ConfirmRestartButton.transform = CGAffineTransform(scaleX: 4,y: 4);
+        ConfirmRestartButton.addTarget(self, action:#selector(restart), for: .touchUpInside)
         
         //Deny Restart
-        DenyButton.setTitle("No", for: .normal)
-        DenyButton.setTitleColor(UIColor.white, for: .normal)
-        DenyButton.frame = CGRect(origin: CGPoint(x: sW*(6/8)-25,y :sH-200), size: CGSize(width: 50, height: 50))
-        DenyButton.transform = CGAffineTransform(scaleX: 4,y: 4);
-        DenyButton.addTarget(self, action:#selector(goBack), for: .touchUpInside)
+        DenyRestartButton.setTitle("No", for: .normal)
+        DenyRestartButton.setTitleColor(UIColor.white, for: .normal)
+        DenyRestartButton.frame = CGRect(origin: CGPoint(x: sW*(6/8)-25,y :sH-200), size: CGSize(width: 50, height: 50))
+        DenyRestartButton.transform = CGAffineTransform(scaleX: 4,y: 4);
+        DenyRestartButton.addTarget(self, action:#selector(deny), for: .touchUpInside)
         
         //Restart Message
-        RestartMessage.numberOfLines = 3
-        RestartMessage.text = "Are you sure you want to restart?"
-        RestartMessage.frame = CGRect(origin: CGPoint(x: sW*(0.5)-50,y :sH*(1/8)), size: CGSize(width: 145, height: 50))
-        RestartMessage.transform = CGAffineTransform(scaleX: 3,y: 3);
+        RestartMessage.numberOfLines = 4
+        RestartMessage.text = "Are you sure you want to restart? \n(Restart current maze)"
+        RestartMessage.frame = CGRect(origin: CGPoint(x: sW*(0.5)-50,y :sH*(1/8)), size: CGSize(width: 145, height: 100))
+        RestartMessage.transform = CGAffineTransform(scaleX: 2,y: 2);
+        
+        //Confrim Reset
+        ConfirmResetButton.setTitle("Yes", for: .normal)
+        ConfirmResetButton.setTitleColor(UIColor.white, for: .normal)
+        ConfirmResetButton.frame = CGRect(origin: CGPoint(x: sW*(2/8)-25,y :sH-200), size: CGSize(width: 50, height: 50))
+        ConfirmResetButton.transform = CGAffineTransform(scaleX: 4,y: 4);
+        ConfirmResetButton.addTarget(self, action:#selector(reset), for: .touchUpInside)
+        
+        //Deny Restart
+        DenyResetButton.setTitle("No", for: .normal)
+        DenyResetButton.setTitleColor(UIColor.white, for: .normal)
+        DenyResetButton.frame = CGRect(origin: CGPoint(x: sW*(6/8)-25,y :sH-200), size: CGSize(width: 50, height: 50))
+        DenyResetButton.transform = CGAffineTransform(scaleX: 4,y: 4);
+        DenyResetButton.addTarget(self, action:#selector(deny), for: .touchUpInside)
+        
+        //Restart Message
+        ResetMessage.numberOfLines = 4
+        ResetMessage.text = "Are you sure you want to reset? \n(Creates new maze)"
+        ResetMessage.frame = CGRect(origin: CGPoint(x: sW*(0.5)-50,y :sH*(1/8)), size: CGSize(width: 145, height: 100))
+        ResetMessage.transform = CGAffineTransform(scaleX: 2,y: 2);
+        
+        //Game title
+        Title.numberOfLines = 3
+        Title.text = "Can you escape the maze?"
+        Title.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(1/8)), size: CGSize(width: 145, height: 100))
+        Title.textAlignment = .center
+        Title.transform = CGAffineTransform(scaleX: 3,y: 3);
+        
+        //Start Button
+        Start.setTitle("Start", for: .normal)
+        Start.setTitleColor(UIColor.black, for: .normal)
+        Start.frame = CGRect(origin: CGPoint(x: sW*(0.5)-25,y :sH*(3/8)), size: CGSize(width: 50, height: 50))
+        Start.transform = CGAffineTransform(scaleX: 4,y: 4);
+        Start.addTarget(self, action:#selector(start), for: .touchUpInside)
+        
+        //About button
+        About.setTitle("About", for: .normal)
+        About.setTitleColor(UIColor.black, for: .normal)
+        About.frame = CGRect(origin: CGPoint(x: sW*(0.5)-25,y :sH*(5/8)), size: CGSize(width: 50, height: 50))
+        About.transform = CGAffineTransform(scaleX: 4,y: 4);
+        About.addTarget(self, action:#selector(about), for: .touchUpInside)
+        
+        //About Message
+        AboutMessage.numberOfLines = 20
+        AboutMessage.text = "About message goes here"
+        AboutMessage.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(1/8)), size: CGSize(width: 145, height: 100))
+        AboutMessage.textAlignment = .center
+        
+        //Back Button from about message
+        AboutBack.setTitle("Back", for: .normal)
+        AboutBack.setTitleColor(UIColor.black, for: .normal)
+        AboutBack.frame = CGRect(origin: CGPoint(x: 0,y :15), size: CGSize(width: 100, height: 30))
+        AboutBack.addTarget(self, action:#selector(backToStart), for: .touchUpInside)
+        
+        self.view.addSubview(Start)
+        self.view.addSubview(Title)
+        self.view.addSubview(About)
         
     }
     let LeftButton = UIButton()
     let RightButton = UIButton()
     let ForwardButton = UIButton()
-    let RestartButton = UIButton()
-    let ConfirmButton = UIButton()
-    let DenyButton = UIButton()
+    
+    let PauseMenu = UIButton()
+    let PauseReset = UIButton()
+    let PauseRestart = UIButton()
+    let PauseMainMenu = UIButton()
+    let BackToMaze = UIButton()
+    
+    //Resets Maze and back at start
+    let ConfirmResetButton = UIButton()
+    let DenyResetButton = UIButton()
+    let ResetMessage = UILabel()
+    
+    //Moves back to start
+    let ConfirmRestartButton = UIButton()
+    let DenyRestartButton = UIButton()
     let RestartMessage = UILabel()
+    
+    let Title = UILabel()
+    let Start = UIButton()
+    let About = UIButton()
+    let AboutMessage = UILabel()
+    
+    let AboutBack = UIButton()
+    
+    
     var xpos:Float = 0.0
     var zpos:Float = 0.0
     
+    @objc func pauseMenu(){
+        xpos = camera.position.x
+        zpos = camera.position.z
+        self.camera.position = SCNVector3(x: -300, y: 150, z: -300)
+        LeftButton.removeFromSuperview()
+        RightButton.removeFromSuperview()
+        ForwardButton.removeFromSuperview()
+        PauseMenu.removeFromSuperview()
+        self.view.addSubview(PauseReset)
+        self.view.addSubview(PauseRestart)
+        self.view.addSubview(PauseMainMenu)
+        self.view.addSubview(BackToMaze)
+    }
     
-    @objc func restart(){
+    @objc func pauseResetMenu(){
+        PauseReset.removeFromSuperview()
+        PauseRestart.removeFromSuperview()
+        PauseMainMenu.removeFromSuperview()
+        BackToMaze.removeFromSuperview()
+        self.view.addSubview(ConfirmResetButton)
+        self.view.addSubview(DenyResetButton)
+        self.view.addSubview(ResetMessage)
+        
+    }
+    @objc func pauseRestartMenu(){
+        PauseReset.removeFromSuperview()
+        PauseRestart.removeFromSuperview()
+        PauseMainMenu.removeFromSuperview()
+        BackToMaze.removeFromSuperview()
+        self.view.addSubview(ConfirmRestartButton)
+        self.view.addSubview(DenyRestartButton)
+        self.view.addSubview(RestartMessage)
+        
+    }
+    @objc func backToMaze(){
+        lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
+        self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
+        PauseReset.removeFromSuperview()
+        PauseRestart.removeFromSuperview()
+        PauseMainMenu.removeFromSuperview()
+        BackToMaze.removeFromSuperview()
+        self.view.addSubview(LeftButton)
+        self.view.addSubview(RightButton)
+        self.view.addSubview(ForwardButton)
+        self.view.addSubview(PauseMenu)
+
+    }
+    
+    @objc func pauseMainMenu(){
+        PauseReset.removeFromSuperview()
+        PauseRestart.removeFromSuperview()
+        PauseMainMenu.removeFromSuperview()
+        BackToMaze.removeFromSuperview()
+        self.view.addSubview(Start)
+        self.view.addSubview(Title)
+        self.view.addSubview(About)
+    }
+    
+    
+    @objc func reset(){
         lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
         unloadMaze()
@@ -163,33 +324,64 @@ class GameViewController: UIViewController{
         self.view.addSubview(LeftButton)
         self.view.addSubview(RightButton)
         self.view.addSubview(ForwardButton)
-        self.view.addSubview(RestartButton)
-        ConfirmButton.removeFromSuperview()
-        DenyButton.removeFromSuperview()
-        RestartMessage.removeFromSuperview()
+        self.view.addSubview(PauseMenu)
+        ConfirmResetButton.removeFromSuperview()
+        DenyResetButton.removeFromSuperview()
+        ResetMessage.removeFromSuperview()
     }
     
-    @objc func goBack(){
-        self.camera.position = SCNVector3(x: xpos, y: 30, z: zpos)
+    @objc func restart(){
+        lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
+        self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
         self.view.addSubview(LeftButton)
         self.view.addSubview(RightButton)
         self.view.addSubview(ForwardButton)
-        self.view.addSubview(RestartButton)
-        ConfirmButton.removeFromSuperview()
-        DenyButton.removeFromSuperview()
+        self.view.addSubview(PauseMenu)
+        ConfirmRestartButton.removeFromSuperview()
+        DenyRestartButton.removeFromSuperview()
         RestartMessage.removeFromSuperview()
     }
-    @objc func restartMenu(){
-        xpos = camera.position.x
-        zpos = camera.position.z
-        self.camera.position = SCNVector3(x: -300, y: 150, z: -300)
-        LeftButton.removeFromSuperview()
-        RightButton.removeFromSuperview()
-        ForwardButton.removeFromSuperview()
-        RestartButton.removeFromSuperview()
-        self.view.addSubview(ConfirmButton)
-        self.view.addSubview(DenyButton)
-        self.view.addSubview(RestartMessage)
+    
+    @objc func deny(){
+        self.view.addSubview(PauseReset)
+        self.view.addSubview(PauseRestart)
+        self.view.addSubview(PauseMainMenu)
+        self.view.addSubview(BackToMaze)
+        ConfirmResetButton.removeFromSuperview()
+        DenyResetButton.removeFromSuperview()
+        ResetMessage.removeFromSuperview()
+        ConfirmRestartButton.removeFromSuperview()
+        DenyRestartButton.removeFromSuperview()
+        RestartMessage.removeFromSuperview()
+    }
+
+    @objc func start(){
+        lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
+        self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
+        unloadMaze()
+        generateMaze()
+        loadMaze()
+        Start.removeFromSuperview()
+        About.removeFromSuperview()
+        Title.removeFromSuperview()
+        self.view.addSubview(LeftButton)
+        self.view.addSubview(RightButton)
+        self.view.addSubview(ForwardButton)
+        self.view.addSubview(PauseMenu)
+    }
+    @objc func about(){
+        Start.removeFromSuperview()
+        Title.removeFromSuperview()
+        About.removeFromSuperview()
+        self.view.addSubview(AboutBack)
+        self.view.addSubview(AboutMessage)
+    }
+    @objc func backToStart(){
+        AboutBack.removeFromSuperview()
+        AboutMessage.removeFromSuperview()
+        self.view.addSubview(Start)
+        self.view.addSubview(Title)
+        self.view.addSubview(About)
     }
     
     @objc func leftButton(){
