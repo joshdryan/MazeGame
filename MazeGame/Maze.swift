@@ -1,0 +1,281 @@
+//
+//  Maze.swift
+//  MazeGame
+//
+//  Created by Josh Ryan on 4/13/18.
+//  Copyright © 2018 Bootleg Mobile. All rights reserved.
+//
+
+import UIKit
+import QuartzCore
+import SceneKit
+import SpriteKit
+
+let testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
+                [1,0,1,1,1,1,1,1,0,1,0,1,0,1,0,1],
+                [1,0,1,0,0,0,1,0,0,1,0,0,0,1,0,1],
+                [1,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1],
+                [1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1],
+                [1,1,1,1,1,0,1,1,1,1,1,1,0,1,0,1],
+                [0,0,1,0,0,0,0,0,0,0,1,0,0,1,0,1],
+                [1,0,1,1,1,1,1,1,1,0,1,0,0,0,0,1],
+                [1,0,1,0,0,0,0,0,1,0,1,0,1,1,0,1],
+                [1,0,1,0,1,1,1,0,1,0,1,0,1,1,0,1],
+                [1,0,0,0,1,0,1,0,1,1,1,0,1,1,0,1],
+                [1,1,1,1,1,0,1,0,1,1,1,0,1,1,0,1],
+                [1,0,0,0,0,0,1,0,0,0,1,0,0,1,0,1],
+                [1,0,1,1,1,1,1,1,1,0,1,1,0,1,0,1],
+                [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
+                [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+//         8x8 array with walls
+let mazeTemplate = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+                [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+//        8x8 array
+let gridTemplate = [0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0]
+
+class Maze {
+    
+//    init wall/materials
+    var wall: [SCNNode] = []
+    let materialRed = SCNMaterial()                 //set red material
+    let materialCyan = SCNMaterial()                //set cyan material
+    var x = SCNNode()
+    
+    init(){
+        materialRed.diffuse.contents = UIColor.red
+    }
+    
+    func generateMaze() {
+        print("Generating Maze")
+        //        https://en.wikipedia.org/wiki/Maze_generation_algorithm
+        
+        
+        //        8x8 array
+        var Array1 = gridTemplate
+        
+//        Load maze template
+        var randMaze = mazeTemplate
+        
+        
+        let mazeSize = Array1.count - 1
+        var currentPos = 0
+        var newPos = 0
+        
+        //        random starting position, change int to UInt32 for compatibility
+        let startingPos = Int(arc4random_uniform(UInt32(mazeSize)))
+        //print(startingPos)
+        
+        currentPos = startingPos
+        Array1[startingPos] = 1
+        
+        //print(Array1)
+        while Array1.contains(0) {
+            var neighbors = [Int]()
+            var neighborPos = 0
+            
+            
+            //            Test for neighbors
+            
+            //            Left neighbor
+            neighborPos = currentPos % 8
+            if (neighborPos - 1) >= 0{
+                neighborPos = currentPos-1
+                if Array1[neighborPos] == 0 {
+                    neighbors.append(neighborPos)
+                }
+                else {
+                    let visitChance = Int(arc4random_uniform(UInt32(100)))
+                    if visitChance < 50 {
+                        neighbors.append(neighborPos)
+                    }
+                }
+                
+            }
+            
+            //            Right neighbor
+            neighborPos = currentPos % 8
+            if (neighborPos + 1) != 8{
+                neighborPos = currentPos+1
+                if Array1[neighborPos] == 0 {
+                    neighbors.append(neighborPos)
+                }
+                else {
+                    let visitChance = Int(arc4random_uniform(UInt32(100)))
+                    if visitChance < 50 {
+                        neighbors.append(neighborPos)
+                    }
+                }
+            }
+            
+            //            Top neighbor
+            neighborPos = currentPos-8
+            if neighborPos >= 0{
+                if Array1[neighborPos] == 0 {
+                    neighbors.append(neighborPos)
+                }
+                else {
+                    let visitChance = Int(arc4random_uniform(UInt32(100)))
+                    if visitChance < 50 {
+                        neighbors.append(neighborPos)
+                    }
+                }
+            }
+            
+            //            Bottom neighbor
+            neighborPos = currentPos+8
+            if neighborPos <= 63{
+                if Array1[neighborPos] == 0 {
+                    neighbors.append(neighborPos)
+                }
+                else {
+                    let visitChance = Int(arc4random_uniform(UInt32(100)))
+                    if visitChance < 50 {
+                        neighbors.append(neighborPos)
+                    }
+                }
+            }
+            
+            if neighbors.count > 0 {
+                let randNeighbor = Int(arc4random_uniform(UInt32(neighbors.count-1)))
+                
+                Array1[neighbors[randNeighbor]] = 1
+                newPos = neighbors[randNeighbor]
+                
+            }
+            else {
+                
+                newPos = 0
+                
+                while newPos == 0 {
+                    let tempPos = Int(arc4random_uniform(UInt32(mazeSize)))
+                    if Array1[tempPos] == 0 {
+                        newPos = tempPos
+                        Array1[newPos] = 1
+                        currentPos = newPos
+                    }
+                }
+            }
+            
+            if abs(currentPos-newPos) == 1 {
+                var col = currentPos % 8
+                var row = ((currentPos-col) / 8) + 1
+                
+                col = (((col+1)*2) - 1) + (newPos-currentPos)
+                row = (row*2) - 1
+                
+                
+                randMaze[row][col] = 0
+            }
+            else if abs(currentPos-newPos) == 8{
+                var col = currentPos % 8
+                var row = ((currentPos-col) / 8) + 1
+                
+                let newCol = newPos % 8
+                let newRow = ((newPos-newCol)/8) + 1
+                
+                col = ((col+1)*2) - 1
+                row = ((row*2) - 1) + (newRow - row)
+                
+                randMaze[row][col] = 0
+            }
+            currentPos = newPos
+        }
+        print("Generated Maze")
+    }
+    
+    func loadMaze() {
+        print("loading Maze")
+        let wallGeometry = SCNBox(width: 5, height: 8, length: 5, chamferRadius: 0)
+        wallGeometry.materials = [materialRed]
+        
+        var xpos = 0.0
+        var zpos = 0.0
+        var ypos = 4
+        var i = 0
+        var xcont = -1
+        
+        x = SCNNode(geometry: wallGeometry)
+        
+        while(i < testMaze.count){
+            for item in testMaze[i]{
+                switch (item){
+                case 0:
+                    xpos=xpos+5
+                case 1:
+                    if (xcont == (-1)) {
+                        x.position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
+                        xcont += 1
+                        xpos = xpos + 5;
+                        ypos = 0
+                    }
+                    else {
+                        x.addChildNode(SCNNode(geometry: wallGeometry))
+                        x.childNodes[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
+                        xcont = xcont + 1;
+                        xpos = xpos + 5;
+                    }
+                default:
+                    print("this shouldn't happen")
+                }
+            }
+            //print("Array",i)
+            xpos = 0
+            zpos = zpos+5
+            i = i+1;
+        }
+        print("finished maze")
+        
+//        sceneView.scene?.rootNode.addChildNode(x)
+//        
+////
+//        for child in wall {
+//            //print(child.position)
+//            sceneView.scene?.rootNode.addChildNode(child)
+//        }
+        
+//        let lookAtGeometry = SCNCylinder(radius: 1.0, height: 15.0)
+//        lookAtGeometry.materials = [materialCyan]
+//        
+//        lookAtNode.geometry = lookAtGeometry
+//        sceneView.scene?.rootNode.addChildNode(lookAtNode)
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

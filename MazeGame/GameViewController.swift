@@ -25,62 +25,15 @@ class GameViewController: UIViewController{
     
     //objects to be added to scene
     var lookAtNode = SCNNode()
-    var wall: [SCNNode] = []
     let materialRed = SCNMaterial()                 //set red material
     let materialCyan = SCNMaterial()                //set cyan material
-    
-//
-//    var testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-//                    [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
-//                    [1,0,1,1,1,1,1,1,0,1,0,1,0,1,0,1],
-//                    [1,0,1,0,0,0,1,0,0,1,0,0,0,1,0,1],
-//                    [1,0,1,0,1,0,1,0,1,1,1,1,1,1,0,1],
-//                    [1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1],
-//                    [1,1,1,1,1,0,1,1,1,1,1,1,0,1,0,1],
-//                    [0,0,1,0,0,0,0,0,0,0,1,0,0,1,0,1],
-//                    [1,0,1,1,1,1,1,1,1,0,1,0,0,0,0,1],
-//                    [1,0,1,0,0,0,0,0,1,0,1,0,1,1,0,1],
-//                    [1,0,1,0,1,1,1,0,1,0,1,0,1,1,0,1],
-//                    [1,0,0,0,1,0,1,0,1,1,1,0,1,1,0,1],
-//                    [1,1,1,1,1,0,1,0,1,1,1,0,1,1,0,1],
-//                    [1,0,0,0,0,0,1,0,0,0,1,0,0,1,0,1],
-//                    [1,0,1,1,1,1,1,1,1,0,1,1,0,1,0,1],
-//                    [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
-//                    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
-    
-    //         8x8 array with walls
-    var testMaze = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
-    
-    //        8x8 array
-    var gridTemplate = [0,0,0,0,0,0,0,0,
-                  0,0,0,0,0,0,0,0,
-                  0,0,0,0,0,0,0,0,
-                  0,0,0,0,0,0,0,0,
-                  0,0,0,0,0,0,0,0,
-                  0,0,0,0,0,0,0,0,
-                  0,0,0,0,0,0,0,0,
-                  0,0,0,0,0,0,0,0]
     
     var gameView: SCNView!
     var gameScene: SCNScene!
     var camaraNode: SCNNode!
     var targetCreationTime: TimeInterval = 0
+    
+    var maze: Maze!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,8 +41,19 @@ class GameViewController: UIViewController{
         initView()
         initMaterial()
         initElements()
-        //generateMaze()
-        //loadMaze()
+        
+        let lookAtGeometry = SCNCylinder(radius: 1.0, height: 15.0)
+        lookAtGeometry.materials = [materialCyan]
+        
+        lookAtNode.geometry = lookAtGeometry
+        sceneView.scene?.rootNode.addChildNode(lookAtNode)
+        
+        maze = Maze()
+        maze.generateMaze()
+        maze.loadMaze()
+        sceneView.scene?.rootNode.addChildNode(maze.x)
+//        generateMaze()
+//        loadMaze()
         
         //Left Button
         LeftButton.setTitle("<", for: .normal)
@@ -225,6 +189,7 @@ class GameViewController: UIViewController{
         self.view.addSubview(About)
         
     }
+    
     let LeftButton = UIButton()
     let RightButton = UIButton()
     let ForwardButton = UIButton()
@@ -318,9 +283,9 @@ class GameViewController: UIViewController{
     @objc func reset(){
         lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
-        unloadMaze()
-        generateMaze()
-        loadMaze()
+//        unloadMaze()
+//        maze.generateMaze()
+//        maze.loadMaze()
         self.view.addSubview(LeftButton)
         self.view.addSubview(RightButton)
         self.view.addSubview(ForwardButton)
@@ -386,67 +351,42 @@ class GameViewController: UIViewController{
     
     @objc func leftButton(){
         if(lookAtNode.position.z > camera.position.z) {
-            self.camera.position = SCNVector3(x: camera.position.x - 15, y: 30, z: camera.position.z + 25)
-            Xplus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x - 20, y: 30, z: lookAtNode.position.z)
         } else if(lookAtNode.position.x > camera.position.x) {
-            self.camera.position = SCNVector3(x: camera.position.x + 20, y: 30, z: camera.position.z + 15)
-            Zminus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x, y: 30, z: lookAtNode.position.z + 20)
         } else if(lookAtNode.position.z < camera.position.z) {
-            self.camera.position = SCNVector3(x: camera.position.x + 15, y: 30, z: camera.position.z - 20)
-            Xminus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x + 20, y: 30, z: lookAtNode.position.z)
         } else if(lookAtNode.position.x < camera.position.x) {
-            self.camera.position = SCNVector3(x: camera.position.x - 20, y: 30, z: camera.position.z - 20)
-            Zplus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x, y: 30, z: lookAtNode.position.z - 20)
         }
     }
     
     @objc func rightButton(){
         if(lookAtNode.position.z > camera.position.z) {
-            self.camera.position = SCNVector3(x: camera.position.x + 15, y: 30, z: camera.position.z + 25)
-            Xminus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x + 20, y: 30, z: lookAtNode.position.z)
         } else if(lookAtNode.position.x > camera.position.x) {
-            self.camera.position = SCNVector3(x: camera.position.x + 20, y: 30, z: camera.position.z - 20)
-            Zplus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x, y: 30, z: lookAtNode.position.z - 20)
         } else if(lookAtNode.position.z < camera.position.z) {
-            self.camera.position = SCNVector3(x: camera.position.x - 15, y: 30, z: camera.position.z - 20)
-            Xplus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x - 20, y: 30, z: lookAtNode.position.z)
         } else if(lookAtNode.position.x < camera.position.x) {
-            self.camera.position = SCNVector3(x: camera.position.x - 20, y: 30, z: camera.position.z + 15)
-            Zminus()
+            self.camera.position = SCNVector3(x: lookAtNode.position.x, y: 30, z: lookAtNode.position.z + 20)
         }
     }
     
     @objc func forwardButton(){
         if(lookAtNode.position.z > camera.position.z) {
             self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z + 5)
-            Zplus()
+            lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z + 5)
         } else if(lookAtNode.position.x > camera.position.x) {
             self.camera.position = SCNVector3(x: camera.position.x + 5, y: 30, z: camera.position.z)
-            Xplus()
+            lookAtNode.position = SCNVector3(x: lookAtNode.position.x + 5, y: 0, z: lookAtNode.position.z)
         } else if(lookAtNode.position.z < camera.position.z) {
             self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z - 5)
-            Zminus()
+            lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z - 5)
         } else if(lookAtNode.position.x < camera.position.x) {
             self.camera.position = SCNVector3(x: camera.position.x - 5, y: 30, z: camera.position.z)
-            Xminus()
+            lookAtNode.position = SCNVector3(x: lookAtNode.position.x - 5, y: 0, z: lookAtNode.position.z)
         }
-    }
-    
-    func Xplus() {
-        //self.camera.position = SCNVector3(x: camera.position.x + 5, y: 30, z: camera.position.z)
-        lookAtNode.position = SCNVector3(x: lookAtNode.position.x + 5, y: 0, z: lookAtNode.position.z)
-    }
-    func Zplus() {
-        //self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z + 5)
-        lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z + 5)
-    }
-    func Xminus() {
-        //self.camera.position = SCNVector3(x: camera.position.x - 5, y: 30, z: camera.position.z)
-        lookAtNode.position = SCNVector3(x: lookAtNode.position.x - 5, y: 0, z: lookAtNode.position.z)
-    }
-    func Zminus() {
-        //self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z - 5)
-        lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z - 5)
     }
     
     func initView() {
@@ -513,229 +453,13 @@ class GameViewController: UIViewController{
         sceneView.scene?.rootNode.addChildNode(ground)
         sceneView.scene?.rootNode.addChildNode(light)
     }
-    
-    func generateMaze() {
-        print("Generating Maze")
-//        https://en.wikipedia.org/wiki/Maze_generation_algorithm
-        
-        ////         8x8 array with walls
-        //        var testArray = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        //                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-        //                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        //                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-        //                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        //                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-        //                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        //                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-        //                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        //                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-        //                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        //                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-        //                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        //                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-        //                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        //                        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-        //                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
-        
-        
-        //        8x8 array
-        var Array1 = gridTemplate
-        
-        let mazeSize = Array1.count - 1
-        
-        var currentPos = 0
-        var newPos = 0
-        
-        //        random starting position, change int to UInt32 for compatibility
-        let startingPos = Int(arc4random_uniform(UInt32(mazeSize)))
-        //print(startingPos)
-        
-        currentPos = startingPos
-        
-        Array1[startingPos] = 1
-        
-        //print(Array1)
-        while Array1.contains(0) {
-            var neighbors = [Int]()
-            var neighborPos = 0
-            
-            //            Test for neighbors
-            
-            //            Left neighbor
-            neighborPos = currentPos % 8
-            if (neighborPos - 1) >= 0{
-                neighborPos = currentPos-1
-                if Array1[neighborPos] == 0 {
-                    neighbors.append(neighborPos)
-                }
-                else {
-                    let visitChance = Int(arc4random_uniform(UInt32(100)))
-                    if visitChance < 50 {
-                        neighbors.append(neighborPos)
-                    }
-                }
-                
-            }
-            
-            //            Right neighbor
-            neighborPos = currentPos % 8
-            if (neighborPos + 1) != 8{
-                neighborPos = currentPos+1
-                if Array1[neighborPos] == 0 {
-                    neighbors.append(neighborPos)
-                }
-                else {
-                    let visitChance = Int(arc4random_uniform(UInt32(100)))
-                    if visitChance < 50 {
-                        neighbors.append(neighborPos)
-                    }
-                }
-            }
-            
-            //            Top neighbor
-            neighborPos = currentPos-8
-            if neighborPos >= 0{
-                if Array1[neighborPos] == 0 {
-                    neighbors.append(neighborPos)
-                }
-                else {
-                    let visitChance = Int(arc4random_uniform(UInt32(100)))
-                    if visitChance < 50 {
-                        neighbors.append(neighborPos)
-                    }
-                }
-            }
-            
-            //            Bottom neighbor
-            neighborPos = currentPos+8
-            if neighborPos <= 63{
-                if Array1[neighborPos] == 0 {
-                    neighbors.append(neighborPos)
-                }
-                else {
-                    let visitChance = Int(arc4random_uniform(UInt32(100)))
-                    if visitChance < 50 {
-                        neighbors.append(neighborPos)
-                    }
-                }
-            }
-            
-            if neighbors.count > 0 {
-                let randNeighbor = Int(arc4random_uniform(UInt32(neighbors.count-1)))
-                
-                Array1[neighbors[randNeighbor]] = 1
-                newPos = neighbors[randNeighbor]
-                
-            }
-            else {
-                
-                newPos = 0
-                
-                while newPos == 0 {
-                    let tempPos = Int(arc4random_uniform(UInt32(mazeSize)))
-                    if Array1[tempPos] == 0 {
-                        newPos = tempPos
-                        Array1[newPos] = 1
-                        currentPos = newPos
-                    }
-                }
-            }
-            
-            if abs(currentPos-newPos) == 1 {
-                var col = currentPos % 8
-                var row = ((currentPos-col) / 8) + 1
-                
-                col = (((col+1)*2) - 1) + (newPos-currentPos)
-                row = (row*2) - 1
-                
-                //print("Right/Left")
-                
-                //print(testMaze)
-                //print(row, col)
-                
-                testMaze[row][col] = 0
-                //print(testMaze)
-            }
-            else if abs(currentPos-newPos) == 8{
-                var col = currentPos % 8
-                var row = ((currentPos-col) / 8) + 1
-                
-                let newCol = newPos % 8
-                let newRow = ((newPos-newCol)/8) + 1
-                
-                col = ((col+1)*2) - 1
-                row = ((row*2) - 1) + (newRow - row)
-                
-                testMaze[row][col] = 0
-            }
-            currentPos = newPos
-        }
-        print("Generated Maze")
-    }
-    
-    func unloadMaze(){
-        print(wall.count)
-        let cont = wall.count
-        var i = 0
-        while(i<cont){
-            wall[i].removeFromParentNode()
-            i=i+1;
-        }
-        wall.removeAll()
-        print(wall.count)
-    }
-    
-    func loadMaze() {
-        print("loading Maze")
-        let wallGeometry = SCNBox(width: 5, height: 8, length: 5, chamferRadius: 0)
-        wallGeometry.materials = [materialRed]
-        
-        var xpos = 0.0
-        var zpos = 0.0
-        let ypos = 4
-        var i = 0
-        var xcont = 0
-        
-        while(i < testMaze.count){
-            for item in testMaze[i]{
-                switch (item){
-                case 0:
-                    xpos=xpos+5
-                case 1:
-                    wall.append(SCNNode(geometry: wallGeometry))
-                    wall[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
-                    xcont = xcont + 1;
-                    xpos = xpos + 5;
-                default:
-                    print("this shouldn't happen")
-                }
-            }
-            //print("Array",i)
-            xpos = 0
-            zpos = zpos+5
-            i = i+1;
-        }
-        print("finished maze")
-        
-        for child in wall {
-            //print(child.position)
-            sceneView.scene?.rootNode.addChildNode(child)
-        }
-        
-        let lookAtGeometry = SCNCylinder(radius: 1.0, height: 15.0)
-        lookAtGeometry.materials = [materialCyan]
-        
-        lookAtNode.geometry = lookAtGeometry
-        sceneView.scene?.rootNode.addChildNode(lookAtNode)
-        
-    }
 
     override var shouldAutorotate: Bool {
         return true
     }
     
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
