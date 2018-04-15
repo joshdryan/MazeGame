@@ -61,13 +61,32 @@ let gridTemplate = [0,0,0,0,0,0,0,0,
 class Maze {
     
 //    init wall/materials
-    var wall: [SCNNode] = []
     let materialRed = SCNMaterial()                 //set red material
     let materialCyan = SCNMaterial()                //set cyan material
-    var x = SCNNode()
+    var walls = SCNNode()
+    
+    var mazeLocations: [Int] = []
+    var randMaze: [[Int]] = [[]]
+//    destination coordinates
+    var destCoords: [Float] = []
     
     init(){
         materialRed.diffuse.contents = UIColor.red
+        //        8x8 array
+        mazeLocations = gridTemplate
+        
+        //        Load maze template
+        randMaze = mazeTemplate
+        
+//        z coordinates
+        destCoords.append(15.0)
+        let chance = Int(arc4random_uniform(UInt32(10)))
+        if chance > 5 {
+            destCoords.append(1.0)
+        }
+        else {
+            destCoords.append(15.0)
+        }
     }
     
     func generateMaze() {
@@ -75,26 +94,16 @@ class Maze {
         //        https://en.wikipedia.org/wiki/Maze_generation_algorithm
         
         
-        //        8x8 array
-        var Array1 = gridTemplate
-        
-//        Load maze template
-        var randMaze = mazeTemplate
-        
-        
-        let mazeSize = Array1.count - 1
+        let mazeSize = mazeLocations.count
         var currentPos = 0
         var newPos = 0
         
         //        random starting position, change int to UInt32 for compatibility
         let startingPos = Int(arc4random_uniform(UInt32(mazeSize)))
-        //print(startingPos)
-        
         currentPos = startingPos
-        Array1[startingPos] = 1
-        
-        //print(Array1)
-        while Array1.contains(0) {
+        mazeLocations[startingPos] = 1
+
+        while mazeLocations.contains(0) {
             var neighbors = [Int]()
             var neighborPos = 0
             
@@ -105,7 +114,7 @@ class Maze {
             neighborPos = currentPos % 8
             if (neighborPos - 1) >= 0{
                 neighborPos = currentPos-1
-                if Array1[neighborPos] == 0 {
+                if mazeLocations[neighborPos] == 0 {
                     neighbors.append(neighborPos)
                 }
                 else {
@@ -121,7 +130,7 @@ class Maze {
             neighborPos = currentPos % 8
             if (neighborPos + 1) != 8{
                 neighborPos = currentPos+1
-                if Array1[neighborPos] == 0 {
+                if mazeLocations[neighborPos] == 0 {
                     neighbors.append(neighborPos)
                 }
                 else {
@@ -135,7 +144,7 @@ class Maze {
             //            Top neighbor
             neighborPos = currentPos-8
             if neighborPos >= 0{
-                if Array1[neighborPos] == 0 {
+                if mazeLocations[neighborPos] == 0 {
                     neighbors.append(neighborPos)
                 }
                 else {
@@ -149,7 +158,7 @@ class Maze {
             //            Bottom neighbor
             neighborPos = currentPos+8
             if neighborPos <= 63{
-                if Array1[neighborPos] == 0 {
+                if mazeLocations[neighborPos] == 0 {
                     neighbors.append(neighborPos)
                 }
                 else {
@@ -163,7 +172,7 @@ class Maze {
             if neighbors.count > 0 {
                 let randNeighbor = Int(arc4random_uniform(UInt32(neighbors.count-1)))
                 
-                Array1[neighbors[randNeighbor]] = 1
+                mazeLocations[neighbors[randNeighbor]] = 1
                 newPos = neighbors[randNeighbor]
                 
             }
@@ -173,9 +182,10 @@ class Maze {
                 
                 while newPos == 0 {
                     let tempPos = Int(arc4random_uniform(UInt32(mazeSize)))
-                    if Array1[tempPos] == 0 {
+                    print (mazeLocations)
+                    if mazeLocations[tempPos] == 0 {
                         newPos = tempPos
-                        Array1[newPos] = 1
+                        mazeLocations[newPos] = 1
                         currentPos = newPos
                     }
                 }
@@ -208,19 +218,19 @@ class Maze {
         print("Generated Maze")
     }
     
-    func unloadMaze(){
-        print(wall.count)
-        let cont = wall.count
-        var i = 0
-        while(i<cont){
-            wall[i].removeFromParentNode()
-            i=i+1;
-        }
-        wall.removeAll()
-        print(wall.count)
-    }
+//    func unloadMaze(){
+//        print(wall.count)
+//        let cont = wall.count
+//        var i = 0
+//        while(i<cont){
+//            wall[i].removeFromParentNode()
+//            i=i+1;
+//        }
+//        wall.removeAll()
+//        print(wall.count)
+//    }
     
-    func loadMaze() {
+    func loadMaze(maze: [[Int]]) {
         print("loading Maze")
         let wallGeometry = SCNBox(width: 5, height: 8, length: 5, chamferRadius: 0)
         wallGeometry.materials = [materialRed]
@@ -231,23 +241,23 @@ class Maze {
         var i = 0
         var xcont = -1
         
-        x = SCNNode(geometry: wallGeometry)
+        walls = SCNNode(geometry: wallGeometry)
         
-        while(i < testMaze.count){
-            for item in testMaze[i]{
+        while(i < maze.count){
+            for item in maze[i]{
                 switch (item){
                 case 0:
                     xpos=xpos+5
                 case 1:
                     if (xcont == (-1)) {
-                        x.position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
+                        walls.position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
                         xcont += 1
                         xpos = xpos + 5;
                         ypos = 0
                     }
                     else {
-                        x.addChildNode(SCNNode(geometry: wallGeometry))
-                        x.childNodes[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
+                        walls.addChildNode(SCNNode(geometry: wallGeometry))
+                        walls.childNodes[xcont].position = SCNVector3(x: Float(xpos), y: Float(ypos), z: Float(zpos))
                         xcont = xcont + 1;
                         xpos = xpos + 5;
                     }

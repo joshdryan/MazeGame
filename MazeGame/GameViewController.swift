@@ -25,8 +25,10 @@ class GameViewController: UIViewController{
     
     //objects to be added to scene
     var lookAtNode = SCNNode()
+    var destNode = SCNNode()
     let materialRed = SCNMaterial()                 //set red material
     let materialCyan = SCNMaterial()                //set cyan material
+    let materialGreen = SCNMaterial()
     
     var gameView: SCNView!
     var gameScene: SCNScene!
@@ -35,7 +37,6 @@ class GameViewController: UIViewController{
     
     var maze: Maze!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,16 +44,34 @@ class GameViewController: UIViewController{
         initMaterial()
         initElements()
         
+//      Initialize player
         let lookAtGeometry = SCNCylinder(radius: 1.0, height: 15.0)
         lookAtGeometry.materials = [materialCyan]
-        
         lookAtNode.geometry = lookAtGeometry
         sceneView.scene?.rootNode.addChildNode(lookAtNode)
         
+//        Initialize Maze
         maze = Maze()
         maze.generateMaze()
-        maze.loadMaze()
-        sceneView.scene?.rootNode.addChildNode(maze.x)
+        maze.loadMaze(maze: maze.randMaze)
+        sceneView.scene?.rootNode.addChildNode(maze.walls)
+        
+//        Initialize Destination
+        let destGeometry = SCNSphere(radius: 1.25)
+        destGeometry.materials = [materialGreen]
+        destNode.geometry = destGeometry
+        destNode.position = SCNVector3(x: maze.destCoords[1]*5, y: 5.25, z: maze.destCoords[0]*5)
+        
+        let mylight = SCNLight()
+        mylight.type = SCNLight.LightType.omni;
+        mylight.color = UIColor.green
+        mylight.intensity = 250.0
+        print (mylight.intensity)
+        destNode.light = mylight;
+
+        sceneView.scene?.rootNode.addChildNode(destNode)
+//        destNode.position = SCNVector3(x: 10, y: 0, z: 5)
+        
         
         //Left Button
         LeftButton.setTitle("<", for: .normal)
@@ -74,7 +93,6 @@ class GameViewController: UIViewController{
         ForwardButton.frame = CGRect(origin: CGPoint(x: sW*(1/2)-25,y :sH-100), size: CGSize(width: 50, height: 50))
         ForwardButton.transform = CGAffineTransform(scaleX: 4,y: 4);
         ForwardButton.addTarget(self, action:#selector(forwardButton), for: .touchUpInside)
-        
         
         //Pause Menu
         PauseMenu.setTitle("Menu", for: .normal)
@@ -217,7 +235,6 @@ class GameViewController: UIViewController{
     let AboutMessage = UILabel()
     
     let AboutBack = UIButton()
-    
     
     var xpos:Float = 0.0
     var zpos:Float = 0.0
@@ -379,18 +396,28 @@ class GameViewController: UIViewController{
     }
     
     @objc func forwardButton(){
-        if(lookAtNode.position.z > camera.position.z) {
+        let randMaze = maze.randMaze
+        let x = Int(lookAtNode.position.x/5.0)
+        let z = Int(lookAtNode.position.z/5.0)
+        if(lookAtNode.position.z > camera.position.z && randMaze[z + 1][x] == 0) {
             self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z + 5)
             lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z + 5)
-        } else if(lookAtNode.position.x > camera.position.x) {
+        }
+        else if(lookAtNode.position.x > camera.position.x && randMaze[z][x+1] == 0) {
             self.camera.position = SCNVector3(x: camera.position.x + 5, y: 30, z: camera.position.z)
             lookAtNode.position = SCNVector3(x: lookAtNode.position.x + 5, y: 0, z: lookAtNode.position.z)
-        } else if(lookAtNode.position.z < camera.position.z) {
+        }
+        else if(lookAtNode.position.z < camera.position.z && randMaze[z-1][x] == 0) {
             self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z - 5)
             lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z - 5)
-        } else if(lookAtNode.position.x < camera.position.x) {
+        }
+        else if(lookAtNode.position.x < camera.position.x && randMaze[z][x-1] == 0) {
             self.camera.position = SCNVector3(x: camera.position.x - 5, y: 30, z: camera.position.z)
             lookAtNode.position = SCNVector3(x: lookAtNode.position.x - 5, y: 0, z: lookAtNode.position.z)
+        }
+        if lookAtNode.position.x == destNode.position.x && lookAtNode.position.z == destNode.position.z {
+            print ("You Won!")
+            
         }
     }
     
@@ -406,11 +433,7 @@ class GameViewController: UIViewController{
         groundMaterial.diffuse.contents = UIColor.white
         groundGeometry.materials = [groundMaterial]
         ground = SCNNode(geometry: groundGeometry)
-        
-        //finding center of maze
-        let lookAtX = (Float(testMaze[0].count / 2)) * 5
-        let lookAtZ = (Float(testMaze.count / 2)) * 5
-        
+
         lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         
         let camera = SCNCamera()
@@ -448,13 +471,14 @@ class GameViewController: UIViewController{
         //loading materials with correct color
         materialRed.diffuse.contents = UIColor.red
         materialCyan.diffuse.contents = UIColor.cyan
+        materialGreen.diffuse.contents = UIColor.white
+        materialGreen.emission.contents = UIColor.green
+        
     }
     
     func initElements() {
         sceneView.allowsCameraControl = true
         sceneView.scene?.rootNode.addChildNode(cameraOrbit)
-        
-//        sceneView.scene?.lookAtNode.addChildNode(cameraOrbit)
         sceneView.scene?.rootNode.addChildNode(ground)
         sceneView.scene?.rootNode.addChildNode(light)
     }
@@ -464,7 +488,7 @@ class GameViewController: UIViewController{
     }
     
     override var prefersStatusBarHidden: Bool {
-        return false
+        return true
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
