@@ -51,7 +51,7 @@ class GameViewController: UIViewController{
         
         maze = Maze()
         maze.generateMaze()
-        maze.loadMaze()
+        maze.loadMaze(maze: maze.randMaze)
         sceneView.scene?.rootNode.addChildNode(maze.x)
         
         //Left Button
@@ -379,16 +379,23 @@ class GameViewController: UIViewController{
     }
     
     @objc func forwardButton(){
-        if(lookAtNode.position.z > camera.position.z) {
+        let randMaze = maze.randMaze
+        let x = Int(lookAtNode.position.x/5.0)
+        let z = Int(lookAtNode.position.z/5.0)
+        print(lookAtNode.position.x, lookAtNode.position.z)
+        if(lookAtNode.position.z > camera.position.z && randMaze[z + 1][x] == 0) {
             self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z + 5)
             lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z + 5)
-        } else if(lookAtNode.position.x > camera.position.x) {
+        }
+        else if(lookAtNode.position.x > camera.position.x && randMaze[z][x+1] == 0) {
             self.camera.position = SCNVector3(x: camera.position.x + 5, y: 30, z: camera.position.z)
             lookAtNode.position = SCNVector3(x: lookAtNode.position.x + 5, y: 0, z: lookAtNode.position.z)
-        } else if(lookAtNode.position.z < camera.position.z) {
+        }
+        else if(lookAtNode.position.z < camera.position.z && randMaze[z-1][x] == 0) {
             self.camera.position = SCNVector3(x: camera.position.x, y: 30, z: camera.position.z - 5)
             lookAtNode.position = SCNVector3(x: lookAtNode.position.x, y: 0, z: lookAtNode.position.z - 5)
-        } else if(lookAtNode.position.x < camera.position.x) {
+        }
+        else if(lookAtNode.position.x < camera.position.x && randMaze[z][x-1] == 0) {
             self.camera.position = SCNVector3(x: camera.position.x - 5, y: 30, z: camera.position.z)
             lookAtNode.position = SCNVector3(x: lookAtNode.position.x - 5, y: 0, z: lookAtNode.position.z)
         }
@@ -406,11 +413,7 @@ class GameViewController: UIViewController{
         groundMaterial.diffuse.contents = UIColor.white
         groundGeometry.materials = [groundMaterial]
         ground = SCNNode(geometry: groundGeometry)
-        
-        //finding center of maze
-        let lookAtX = (Float(testMaze[0].count / 2)) * 5
-        let lookAtZ = (Float(testMaze.count / 2)) * 5
-        
+
         lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         
         let camera = SCNCamera()
@@ -464,7 +467,7 @@ class GameViewController: UIViewController{
     }
     
     override var prefersStatusBarHidden: Bool {
-        return false
+        return true
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

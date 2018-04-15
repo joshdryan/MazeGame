@@ -66,8 +66,16 @@ class Maze {
     let materialCyan = SCNMaterial()                //set cyan material
     var x = SCNNode()
     
+    var mazeLocations: [Int] = []
+    var randMaze: [[Int]] = [[]]
+    
     init(){
         materialRed.diffuse.contents = UIColor.red
+        //        8x8 array
+        mazeLocations = gridTemplate
+        
+        //        Load maze template
+        randMaze = mazeTemplate
     }
     
     func generateMaze() {
@@ -75,14 +83,7 @@ class Maze {
         //        https://en.wikipedia.org/wiki/Maze_generation_algorithm
         
         
-        //        8x8 array
-        var Array1 = gridTemplate
-        
-//        Load maze template
-        var randMaze = mazeTemplate
-        
-        
-        let mazeSize = Array1.count - 1
+        let mazeSize = mazeLocations.count - 1
         var currentPos = 0
         var newPos = 0
         
@@ -91,10 +92,10 @@ class Maze {
         //print(startingPos)
         
         currentPos = startingPos
-        Array1[startingPos] = 1
+        mazeLocations[startingPos] = 1
         
-        //print(Array1)
-        while Array1.contains(0) {
+        //print(mazeLocations)
+        while mazeLocations.contains(0) {
             var neighbors = [Int]()
             var neighborPos = 0
             
@@ -105,7 +106,7 @@ class Maze {
             neighborPos = currentPos % 8
             if (neighborPos - 1) >= 0{
                 neighborPos = currentPos-1
-                if Array1[neighborPos] == 0 {
+                if mazeLocations[neighborPos] == 0 {
                     neighbors.append(neighborPos)
                 }
                 else {
@@ -121,7 +122,7 @@ class Maze {
             neighborPos = currentPos % 8
             if (neighborPos + 1) != 8{
                 neighborPos = currentPos+1
-                if Array1[neighborPos] == 0 {
+                if mazeLocations[neighborPos] == 0 {
                     neighbors.append(neighborPos)
                 }
                 else {
@@ -135,7 +136,7 @@ class Maze {
             //            Top neighbor
             neighborPos = currentPos-8
             if neighborPos >= 0{
-                if Array1[neighborPos] == 0 {
+                if mazeLocations[neighborPos] == 0 {
                     neighbors.append(neighborPos)
                 }
                 else {
@@ -149,7 +150,7 @@ class Maze {
             //            Bottom neighbor
             neighborPos = currentPos+8
             if neighborPos <= 63{
-                if Array1[neighborPos] == 0 {
+                if mazeLocations[neighborPos] == 0 {
                     neighbors.append(neighborPos)
                 }
                 else {
@@ -163,7 +164,7 @@ class Maze {
             if neighbors.count > 0 {
                 let randNeighbor = Int(arc4random_uniform(UInt32(neighbors.count-1)))
                 
-                Array1[neighbors[randNeighbor]] = 1
+                mazeLocations[neighbors[randNeighbor]] = 1
                 newPos = neighbors[randNeighbor]
                 
             }
@@ -173,9 +174,9 @@ class Maze {
                 
                 while newPos == 0 {
                     let tempPos = Int(arc4random_uniform(UInt32(mazeSize)))
-                    if Array1[tempPos] == 0 {
+                    if mazeLocations[tempPos] == 0 {
                         newPos = tempPos
-                        Array1[newPos] = 1
+                        mazeLocations[newPos] = 1
                         currentPos = newPos
                     }
                 }
@@ -220,7 +221,7 @@ class Maze {
         print(wall.count)
     }
     
-    func loadMaze() {
+    func loadMaze(maze: [[Int]]) {
         print("loading Maze")
         let wallGeometry = SCNBox(width: 5, height: 8, length: 5, chamferRadius: 0)
         wallGeometry.materials = [materialRed]
@@ -233,8 +234,8 @@ class Maze {
         
         x = SCNNode(geometry: wallGeometry)
         
-        while(i < testMaze.count){
-            for item in testMaze[i]{
+        while(i < maze.count){
+            for item in maze[i]{
                 switch (item){
                 case 0:
                     xpos=xpos+5
