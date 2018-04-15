@@ -194,7 +194,7 @@ class GameViewController: UIViewController{
         //About Message
         AboutMessage.numberOfLines = 20
         AboutMessage.text = "About message goes here"
-        AboutMessage.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(1/8)), size: CGSize(width: 145, height: 100))
+        AboutMessage.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(1/8)), size: CGSize(width: 145, height: sH*(7/8)))
         AboutMessage.textAlignment = .center
         
         //Back Button from about message
@@ -274,8 +274,7 @@ class GameViewController: UIViewController{
         
     }
     @objc func backToMaze(){
-        lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
-        self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
+        self.camera.position = SCNVector3(x: xpos, y: 30, z: zpos)
         PauseReset.removeFromSuperview()
         PauseRestart.removeFromSuperview()
         PauseMainMenu.removeFromSuperview()
@@ -302,9 +301,10 @@ class GameViewController: UIViewController{
         lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
         //******Doesnt work right now
-        //maze.unloadMaze()
+        //maze.walls.removeFromParentNode()
         //maze.generateMaze()
-        //maze.loadMaze()
+        //maze.loadMaze(maze: maze.randMaze)
+        //sceneView.scene?.rootNode.addChildNode(maze.walls)
         //******
         self.view.addSubview(LeftButton)
         self.view.addSubview(RightButton)
@@ -343,11 +343,6 @@ class GameViewController: UIViewController{
     @objc func start(){
         lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
-        //******Doesnt work right now
-        //maze.unloadMaze()
-        //maze.generateMaze()
-        //maze.loadMaze()
-        //******
         Start.removeFromSuperview()
         About.removeFromSuperview()
         Title.removeFromSuperview()
