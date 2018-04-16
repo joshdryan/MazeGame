@@ -271,21 +271,7 @@ class Maze {
             i = i+1;
         }
         print("finished maze")
-        
-//        sceneView.scene?.rootNode.addChildNode(x)
-//        
-////
-//        for child in wall {
-//            //print(child.position)
-//            sceneView.scene?.rootNode.addChildNode(child)
-//        }
-        
-//        let lookAtGeometry = SCNCylinder(radius: 1.0, height: 15.0)
-//        lookAtGeometry.materials = [materialCyan]
-//        
-//        lookAtNode.geometry = lookAtGeometry
-//        sceneView.scene?.rootNode.addChildNode(lookAtNode)
-        
+        print(randMaze)
     }
 }
 

@@ -301,10 +301,12 @@ class GameViewController: UIViewController{
         lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
         //******Doesnt work right now
-        //maze.walls.removeFromParentNode()
-        //maze.generateMaze()
-        //maze.loadMaze(maze: maze.randMaze)
-        //sceneView.scene?.rootNode.addChildNode(maze.walls)
+        maze.walls.removeFromParentNode()
+        
+        maze = Maze()
+        maze.generateMaze()
+        maze.loadMaze(maze: maze.randMaze)
+        sceneView.scene?.rootNode.addChildNode(maze.walls)
         //******
         self.view.addSubview(LeftButton)
         self.view.addSubview(RightButton)
