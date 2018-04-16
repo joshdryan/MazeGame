@@ -61,17 +61,13 @@ class GameViewController: UIViewController{
         destGeometry.materials = [materialGreen]
         destNode.geometry = destGeometry
         destNode.position = SCNVector3(x: maze.destCoords[1]*5, y: 5.25, z: maze.destCoords[0]*5)
-        
         let mylight = SCNLight()
         mylight.type = SCNLight.LightType.omni;
         mylight.color = UIColor.green
         mylight.intensity = 250.0
         print (mylight.intensity)
         destNode.light = mylight;
-
         sceneView.scene?.rootNode.addChildNode(destNode)
-//        destNode.position = SCNVector3(x: 10, y: 0, z: 5)
-        
         
         //Left Button
         LeftButton.setTitle("<", for: .normal)
@@ -148,6 +144,13 @@ class GameViewController: UIViewController{
         RestartMessage.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(1/8)), size: CGSize(width: 145, height: 100))
         RestartMessage.textAlignment = .center
         RestartMessage.transform = CGAffineTransform(scaleX: 2,y: 2);
+        
+//        Win Message
+        WinMessage.numberOfLines = 2
+        WinMessage.text = "Congratulations! \n You Won!"
+        WinMessage.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(1/8)), size: CGSize(width: 145, height: 100))
+        WinMessage.textAlignment = .center
+        WinMessage.transform = CGAffineTransform(scaleX: 2,y: 2);
         
         //Confrim Reset
         ConfirmResetButton.setTitle("Yes", for: .normal)
@@ -228,6 +231,7 @@ class GameViewController: UIViewController{
     let ConfirmRestartButton = UIButton()
     let DenyRestartButton = UIButton()
     let RestartMessage = UILabel()
+    let WinMessage = UILabel()
     
     let Title = UILabel()
     let Start = UIButton()
@@ -417,6 +421,7 @@ class GameViewController: UIViewController{
         }
         if lookAtNode.position.x == destNode.position.x && lookAtNode.position.z == destNode.position.z {
             print ("You Won!")
+            self.view.addSubview(WinMessage)
             
         }
     }
