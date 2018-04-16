@@ -28,7 +28,7 @@ class GameViewController: UIViewController{
     var destNode = SCNNode()
     let materialRed = SCNMaterial()                 //set red material
     let materialCyan = SCNMaterial()                //set cyan material
-    let materialGreen = SCNMaterial()
+    let materialGreen = SCNMaterial()               //set green material
     
     var gameView: SCNView!
     var gameScene: SCNScene!
@@ -44,19 +44,19 @@ class GameViewController: UIViewController{
         initMaterial()
         initElements()
         
-//      Initialize player
+        //Initialize player
         let lookAtGeometry = SCNCylinder(radius: 1.0, height: 15.0)
         lookAtGeometry.materials = [materialCyan]
         lookAtNode.geometry = lookAtGeometry
         sceneView.scene?.rootNode.addChildNode(lookAtNode)
         
-//        Initialize Maze
+        //Initialize Maze
         maze = Maze()
         maze.generateMaze()
         maze.loadMaze(maze: maze.randMaze)
         sceneView.scene?.rootNode.addChildNode(maze.walls)
         
-//        Initialize Destination
+        //Initialize Destination
         let destGeometry = SCNSphere(radius: 1.25)
         destGeometry.materials = [materialGreen]
         destNode.geometry = destGeometry
@@ -65,7 +65,6 @@ class GameViewController: UIViewController{
         mylight.type = SCNLight.LightType.omni;
         mylight.color = UIColor.green
         mylight.intensity = 250.0
-        print (mylight.intensity)
         destNode.light = mylight;
         sceneView.scene?.rootNode.addChildNode(destNode)
         
@@ -145,7 +144,7 @@ class GameViewController: UIViewController{
         RestartMessage.textAlignment = .center
         RestartMessage.transform = CGAffineTransform(scaleX: 2,y: 2);
         
-//        Win Message
+        //Win Message
         WinMessage.numberOfLines = 2
         WinMessage.text = "Congratulations! \n You Won!"
         WinMessage.frame = CGRect(origin: CGPoint(x: sW*(0.5)-(145/2),y :sH*(1/8)), size: CGSize(width: 145, height: 100))
@@ -209,7 +208,6 @@ class GameViewController: UIViewController{
         self.view.addSubview(Start)
         self.view.addSubview(Title)
         self.view.addSubview(About)
-        
     }
     
     let LeftButton = UIButton()
@@ -251,6 +249,7 @@ class GameViewController: UIViewController{
         RightButton.removeFromSuperview()
         ForwardButton.removeFromSuperview()
         PauseMenu.removeFromSuperview()
+        WinMessage.removeFromSuperview()
         self.view.addSubview(PauseReset)
         self.view.addSubview(PauseRestart)
         self.view.addSubview(PauseMainMenu)
@@ -265,8 +264,8 @@ class GameViewController: UIViewController{
         self.view.addSubview(ConfirmResetButton)
         self.view.addSubview(DenyResetButton)
         self.view.addSubview(ResetMessage)
-        
     }
+    
     @objc func pauseRestartMenu(){
         PauseReset.removeFromSuperview()
         PauseRestart.removeFromSuperview()
@@ -277,6 +276,7 @@ class GameViewController: UIViewController{
         self.view.addSubview(RestartMessage)
         
     }
+    
     @objc func backToMaze(){
         self.camera.position = SCNVector3(x: xpos, y: 30, z: zpos)
         PauseReset.removeFromSuperview()
@@ -287,7 +287,6 @@ class GameViewController: UIViewController{
         self.view.addSubview(RightButton)
         self.view.addSubview(ForwardButton)
         self.view.addSubview(PauseMenu)
-
     }
     
     @objc func pauseMainMenu(){
@@ -300,18 +299,14 @@ class GameViewController: UIViewController{
         self.view.addSubview(About)
     }
     
-    
     @objc func reset(){
         lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
-        //******Doesnt work right now
         maze.walls.removeFromParentNode()
-        
         maze = Maze()
         maze.generateMaze()
         maze.loadMaze(maze: maze.randMaze)
         sceneView.scene?.rootNode.addChildNode(maze.walls)
-        //******
         self.view.addSubview(LeftButton)
         self.view.addSubview(RightButton)
         self.view.addSubview(ForwardButton)
@@ -345,7 +340,7 @@ class GameViewController: UIViewController{
         DenyRestartButton.removeFromSuperview()
         RestartMessage.removeFromSuperview()
     }
-
+    
     @objc func start(){
         lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         self.camera.position = SCNVector3(x: 5, y: 30, z: -20)
@@ -357,6 +352,7 @@ class GameViewController: UIViewController{
         self.view.addSubview(ForwardButton)
         self.view.addSubview(PauseMenu)
     }
+    
     @objc func about(){
         Start.removeFromSuperview()
         Title.removeFromSuperview()
@@ -364,6 +360,7 @@ class GameViewController: UIViewController{
         self.view.addSubview(AboutBack)
         self.view.addSubview(AboutMessage)
     }
+    
     @objc func backToStart(){
         AboutBack.removeFromSuperview()
         AboutMessage.removeFromSuperview()
@@ -417,9 +414,7 @@ class GameViewController: UIViewController{
             lookAtNode.position = SCNVector3(x: lookAtNode.position.x - 5, y: 0, z: lookAtNode.position.z)
         }
         if lookAtNode.position.x == destNode.position.x && lookAtNode.position.z == destNode.position.z {
-            print ("You Won!")
             self.view.addSubview(WinMessage)
-            
         }
     }
     
@@ -435,11 +430,9 @@ class GameViewController: UIViewController{
         groundMaterial.diffuse.contents = UIColor.white
         groundGeometry.materials = [groundMaterial]
         ground = SCNNode(geometry: groundGeometry)
-
         lookAtNode.position = SCNVector3(x: 5, y: 0, z: 5)
         
         let camera = SCNCamera()
-
         camera.zFar = 1000
         self.camera = SCNNode()
         self.camera.camera = camera
@@ -453,8 +446,7 @@ class GameViewController: UIViewController{
         let ambientLight = SCNLight()
         ambientLight.color = UIColor.darkGray
         ambientLight.type = SCNLight.LightType.ambient
-        self.camera.light = ambientLight/**/
-        
+        self.camera.light = ambientLight
         
         let spotLight = SCNLight()
         spotLight.type = SCNLight.LightType.spot
@@ -465,7 +457,6 @@ class GameViewController: UIViewController{
         light = SCNNode()
         light.light = spotLight
         light.position = SCNVector3(x: -25, y: 15, z: -25)
-        //light.position = SCNVector3(x: lookAtX, y: 100, z: lookAtZ)
         light.constraints = [constraint]
     }
     
@@ -473,9 +464,9 @@ class GameViewController: UIViewController{
         //loading materials with correct color
         materialRed.diffuse.contents = UIColor.red
         materialCyan.diffuse.contents = UIColor.cyan
+        //Glowing orb
         materialGreen.diffuse.contents = UIColor.white
         materialGreen.emission.contents = UIColor.green
-        
     }
     
     func initElements() {

@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  MazeGame
 //
-//  Created by Josh Ryan on 2/26/18.
+//  Created by Daniel Lambert, Josh Ryan, Leo Stelmaszek on 2/26/18.
 //  Copyright © 2018 Bootleg Mobile. All rights reserved.
 //
 
