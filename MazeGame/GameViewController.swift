@@ -470,7 +470,7 @@ class GameViewController: UIViewController{
     }
     
     func initElements() {
-        sceneView.allowsCameraControl = true
+//        sceneView.allowsCameraControl = true
         sceneView.scene?.rootNode.addChildNode(cameraOrbit)
         sceneView.scene?.rootNode.addChildNode(ground)
         sceneView.scene?.rootNode.addChildNode(light)
